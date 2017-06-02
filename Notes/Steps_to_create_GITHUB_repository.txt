@@ -154,3 +154,8 @@ D:\GITHubProject\MyTestApp [master]> git remote -v
 5.  git pull origin master
 
 
+
+===========================
+incase you face issue where new credentials or different accountis taking old userame password
+You may have to check windows credential manager and delete the github entry under control panel > user accounts > credential manager > Windows credentials > Generic credentials
+
