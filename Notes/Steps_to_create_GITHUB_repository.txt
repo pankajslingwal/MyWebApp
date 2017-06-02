@@ -1,0 +1,156 @@
+GIT HUB Creating Repository & PUSH/PULL files/folders
+
+1 : Create a new repository on GitHub. To avoid errors, do not initialize the new repository with README,
+license, or gitignore files. You can add these files after your project has been pushed to GitHub.
+
+2. Open Git Bash.
+
+Windows PowerShell
+Copyright (C) 2016 Microsoft Corporation. All rights reserved.
+
+~\Documents\GitHub> d:
+
+3. Change the current working directory to your local project.
+
+D:\> cd D:\GITHubProject
+D:\GITHubProject> cd .\MyTestApp\
+
+4. Initialize the local directory as a Git repository
+
+D:\GITHubProject\MyTestApp> git init
+Initialized empty Git repository in D:/GITHubProject/MyTestApp/.git/
+
+5. Add the files in your new local repository. This stages them for the first commit.
+
+D:\GITHubProject\MyTestApp [master +2 ~0 -0 !]> git add .
+
+6. Commit the files that you've staged in your local repository
+
+D:\GITHubProject\MyTestApp [master +2 ~0 -0 ~]> git commit -m "My First Commit"
+[master (root-commit) 70766d7] My First Commit
+ 2 files changed, 2 insertions(+)
+ create mode 100644 Controller/controller.txt
+ create mode 100644 test.txt
+
+7. At the top of your GitHub repository's Quick Setup page, click  to copy the remote repository URL.
+Get the remote repository URL e.g. https://github.com/NodePractice/MyTestApp.git
+
+8. In the Command prompt, add the URL for the remote repository where your local repository will be pushed.
+
+D:\GITHubProject\MyTestApp [master]> git remote add origin https://github.com/NodePractice/MyTestApp.git
+D:\GITHubProject\MyTestApp [master]> git remote -v
+origin  https://github.com/NodePractice/MyTestApp.git (fetch)
+origin  https://github.com/NodePractice/MyTestApp.git (push)
+D:\GITHubProject\MyTestApp [master]> git push origin master
+Counting objects: 5, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (5/5), 329 bytes | 0 bytes/s, done.
+Total 5 (delta 0), reused 0 (delta 0)
+To https://github.com/NodePractice/MyTestApp.git
+ * [new branch]      master -> master
+
+9. Push the changes in your local repository to GitHub.
+
+D:\GITHubProject\MyTestApp [master]> git push origin master
+Everything up-to-date
+
+=================================================================================================
+
+To commit other changes :
+
+D:\GITHubProject\MyTestApp [master +0 ~1 -0 !]> git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   Controller/controller.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+D:\GITHubProject\MyTestApp [master +0 ~1 -0 !]> git add .
+D:\GITHubProject\MyTestApp [master +0 ~1 -0 ~]> git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        modified:   Controller/controller.txt
+
+D:\GITHubProject\MyTestApp [master +0 ~1 -0 ~]> git commit -m "second commit"
+[master dee1edc] second commit
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+D:\GITHubProject\MyTestApp [master]> git status
+On branch master
+nothing to commit, working tree clean
+
+D:\GITHubProject\MyTestApp [master]> git push origin master
+Counting objects: 4, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (4/4), 350 bytes | 0 bytes/s, done.
+Total 4 (delta 0), reused 0 (delta 0)
+To https://github.com/NodePractice/MyTestApp.git
+   70766d7..dee1edc  master -> master
+D:\GITHubProject\MyTestApp [master]> git pull origin master
+remote: Counting objects: 3, done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (3/3), done.
+From https://github.com/NodePractice/MyTestApp
+ * branch            master     -> FETCH_HEAD
+   dee1edc..c6c2038  master     -> origin/master
+Updating dee1edc..c6c2038
+Fast-forward
+ test.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+ D:\GITHubProject\MyTestApp [master]> git status
+On branch master
+nothing to commit, working tree clean
+
+===============================================================================================
+
+To Take latest from GITHUB
+
+D:\GITHubProject\MyTestApp [master]>git pull origin master
+
+===============================================================================================
+
+Steps to Merge conflict 
+
+> git add .
+
+> git status
+
+> git commit -m "commited confilct" [ This is must , else if you do pull , your changes will be overwritten]
+
+> git pull origin master
+(There will be merge conflict if same line of a file is updated by multiple users)
+
+> Manually correct the same [Delete the conflict markers <<<<<<<, =======, >>>>>>> and make the changes you want in the final merge.]
+
+> git add .
+
+> git status 
+
+> git commit -m "commit conflict"
+
+> git push origin master
+
+================================================================================================
+Downloding a project into a new local folder from GITHUB [Fresh setup]
+
+1.  Create a local folder
+
+2.  Open Powershell and navigate to that folder
+
+3.  git init
+
+4.  In the Command prompt, add the URL for the remote repository where your local repository will be pushed.
+
+D:\GITHubProject\MyTestApp [master]> git remote add origin https://github.com/NodePractice/MyTestApp.git
+D:\GITHubProject\MyTestApp [master]> git remote -v   
+
+5.  git pull origin master
+
+
