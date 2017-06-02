@@ -159,3 +159,10 @@ D:\GITHubProject\MyTestApp [master]> git remote -v
 incase you face issue where new credentials or different accountis taking old userame password
 You may have to check windows credential manager and delete the github entry under control panel > user accounts > credential manager > Windows credentials > Generic credentials
 
+======================================
+
+fatal: unable to auto-detect email address (got 'zappx@zappx-pc.(none)')
+
+D:\MyWebApp>git config --global user.name "pankajslingwal"
+
+D:\MyWebApp>git config --global user.email "pankajslingwal@gmail.com"
