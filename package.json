@@ -1,0 +1,27 @@
+{
+  "name": "mywebapp",
+  "version": "1.0.0",
+  "description": "learning node",
+  "main": "app.js",
+  "dependencies": {
+    "handlebars": "^4.0.10",
+    "koa": "^2.2.0",
+    "koa-handlebars": "^1.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pankajslingwal/MyWebApp.git"
+  },
+  "author": "Pankaj Singh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pankajslingwal/MyWebApp/issues"
+  },
+  "homepage": "https://github.com/pankajslingwal/MyWebApp#readme"
+}
