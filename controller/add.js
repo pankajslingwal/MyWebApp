@@ -1,11 +1,6 @@
-const ROUTER = require('koa-router');
-var router = new ROUTER();
-
-router.get('/add', function (ctx, next) {
-    yield ctx.render("index",{
-        title:"Add Page",
-        name:"This is add page"
+module.exports = function (router) {
+    router.get('/add', function (ctx) {
+        ctx.state = { pagetitle: 'Add Employee', heading: 'Add new Employee' }
+        return ctx.render("add.hbs");
     });
-});
-
-module.exports.addRouter = router;
+}
