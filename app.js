@@ -9,9 +9,13 @@ var myapp = new KOA();
 /*Layout for koa-views*/
 myapp.use(VIEWS(__dirname + '/views', {
   map: { hbs: 'handlebars' },
+  extension: 'hbs',
   options: {
       helpers: {
         uppercase: (str) => str.toUpperCase()
+      },
+      partials: {
+        error: './error' 
       }
     }
 }));
