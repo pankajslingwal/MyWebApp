@@ -1,9 +1,14 @@
 const KOA = require('koa');
 const VIEWS = require('koa-views');
 const ROUTER = require('koa-router');
+const SERVE   = require('koa-static');
+
 
 var router = new ROUTER();
-var myapp = new KOA();
+var myapp = new KOA(); 
+
+/*Create publica directory for static files like css and js*/
+myapp.use(SERVE(__dirname + '/public'));
 
 
 /*Layout for koa-views*/
