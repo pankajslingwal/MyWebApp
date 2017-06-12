@@ -8,27 +8,24 @@
     <link rel="stylesheet" href="/css/main.css">
   </head>
   <body>
-        <h2>{{heading}}</h2>
         <form class="form-horizontal">
-        <fieldset> 
-
-        <!-- Form Name -->
-        <legend>Form Name</legend>
-
+        <fieldset>
+        <div class="form-group">
+            <div class="col-md-4">
+            </div>
+            <h2 class="col-md-4">{{heading}}</h2>
+            <div class="col-md-4">
+            </div>
+        </div>
         <!-- Text input-->
         <div class="form-group">
-        <label class="col-md-4 control-label" for="textinput">Text Input</label>  
+        <label class="col-md-4 control-label" for="textinput">Email address:</label>  
         <div class="col-md-4">
         <input id="textinput" name="textinput" type="text" placeholder="placeholder" class="form-control input-md">
-        <span class="help-block">help</span>  
+        <span class="help-block">Enter your corporate email id for registration</span>
         </div>
-        </div>
-
-        <!-- Button -->
-        <div class="form-group">
-        <label class="col-md-4 control-label" for="singlebutton">Single Button</label>
         <div class="col-md-4">
-            <button id="singlebutton" name="singlebutton" class="btn btn-primary">Button</button>
+            <button id="singlebutton" name="singlebutton" class="btn btn-primary">Submit</button>
         </div>
         </div>
 
