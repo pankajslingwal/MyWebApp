@@ -6,9 +6,21 @@
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/main.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-touch.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-messages.min.js"></script>
+    
   </head>
-  <body>
-        <form class="form-horizontal">
+  <script>
+        angular.module('MyWebApp', ['ngMessages'])
+          .controller('MyWebAppController', ['$scope', function($scope) {
+            $scope.email = {
+              text: 'me@mycompany.com'
+            };
+          }]);
+  </script>
+  <body ng-app="MyWebApp">
+        <form name="myForm" class="form-horizontal" ng-controller="MyWebAppController">
         <fieldset>
         <div class="form-group">
             <div class="col-md-4">
@@ -21,7 +33,22 @@
         <div class="form-group">
         <label class="col-md-4 control-label" for="textinput">Email address:</label>  
         <div class="col-md-4">
-        <input id="textinput" name="textinput" type="text" placeholder="placeholder" class="form-control input-md">
+        <input id="textinput" name="input" ng-model="email.text" type="email" placeholder="placeholder" class="form-control input-md" required>
+        <br/>
+        
+        {{!--<p ng-bind="myForm.input.$valid"></p>--}}
+        {{!--<p ng-bind="myForm.input.$error.required"></p>--}}
+        {{!--<div role="alert" class="msg-block" ng-if="myForm.input.$dirty" style="color:maroon; display: inline-block;">
+          <div ng-if="myForm.input.$error.required">The Email field is required</div>
+          <div ng-if="myForm.input.$invalid" >Email format is wrong</div>
+        </div>--}}
+        
+        {{!--Can be done by using ng-if='myForm.input.$error' && ng-show='myForm.input.$error.required'--}}
+        <div role="alert" class="msg-block" ng-messages="myForm.input.$error" style="color:maroon; display: inline-block;">
+          <div ng-message="required">The Email field is required</div>
+          <div ng-message="email" >Email format is wrong</div>
+        </div>
+
         <span class="help-block">Enter your corporate email id for registration</span>
         </div>
         <div class="col-md-4">
@@ -31,5 +58,10 @@
 
         </fieldset>
         </form>
+
+        <div class="form-group">
+          <p class="col-md-8">Admin click here</p>
+          <p class="col-md-8">Employee click click here to update their profile data</p>
+        </div>
   </body>
 </html>
