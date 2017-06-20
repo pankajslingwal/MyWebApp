@@ -7,12 +7,15 @@
 //npm config set msvs_version 2013 --global
 
 //gyp ERR! stack ERROR: Registry editing has been disabled by your administrator.
+//npm config set msvs_version 2013
+//For anyone that needs to know how to find it, it is called "VS2013 x64 Cross Tools Command Prompt" Be sure to Run it as Admin.
+//npm install --save couchbase
 
 
 
 var couchbase = require('couchbase')
 var cluster = new couchbase.Cluster('couchbase://localhost:8091/');
-var bucket = cluster.openBucket('MyNodeJS');
+var bucket = cluster.openBucket('default');
 var N1qlQuery = couchbase.N1qlQuery;
 
 bucket.manager().createPrimaryIndex(function() {

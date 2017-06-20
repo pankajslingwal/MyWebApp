@@ -4,6 +4,13 @@
   "description": "learning node",
   "main": "app.js",
   "dependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-plugin-syntax-async-functions": "^6.13.0",
+    "babel-plugin-transform-regenerator": "^6.24.1",
+    "babel-polyfill": "^6.23.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-node6": "^11.0.0",
+    "couchbase": "^2.3.4",
     "handlebars": "^4.0.10",
     "koa": "^2.2.0",
     "koa-handlebars": "^1.0.0",
@@ -12,6 +19,8 @@
     "koa-views": "^6.0.2"
   },
   "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-preset-env": "^1.5.2",
     "nodemon": "^1.11.0"
   },
   "scripts": {
@@ -27,5 +36,10 @@
   "bugs": {
     "url": "https://github.com/pankajslingwal/MyWebApp/issues"
   },
-  "homepage": "https://github.com/pankajslingwal/MyWebApp#readme"
+  "homepage": "https://github.com/pankajslingwal/MyWebApp#readme",
+  "babel": {
+    "presets": [
+      "env"
+    ]
+  }
 }

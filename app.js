@@ -1,3 +1,4 @@
+
 const KOA = require('koa');
 const VIEWS = require('koa-views');
 const ROUTER = require('koa-router');
@@ -10,7 +11,7 @@ var myapp = new KOA();
 /*Create publica directory for static files like css and js*/
 myapp.use(SERVE(__dirname + '/public'));
 
-
+  
 /*Layout for koa-views*/
 myapp.use(VIEWS(__dirname + '/views', {
   map: { hbs: 'handlebars' },
