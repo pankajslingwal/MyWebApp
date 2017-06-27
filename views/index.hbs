@@ -16,6 +16,14 @@
             $scope.email = {
               text: 'me@mycompany.com'
             };
+
+            $scope.submit = function() {
+              if ($scope.email) {
+                $scope.list.push(this.text);
+                $scope.text = '';
+              }
+            };
+
           }]);
   </script>
   <body ng-app="MyWebApp">
@@ -51,7 +59,7 @@
         <span class="help-block">Enter your corporate email id for registration</span>
         </div>
         <div class="col-md-4">
-            <button id="singlebutton" name="singlebutton" class="btn btn-primary">Submit</button>
+            <button id="singlebutton" name="singlebutton" class="btn btn-primary" ng-submit="submit()">Submit</button>
         </div>
         </div>
 
