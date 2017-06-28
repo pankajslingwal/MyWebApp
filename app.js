@@ -21,9 +21,9 @@ router.get('/', function (req, res, next) {
   res.render('index', { pagetitle: 'HomePage', heading: 'Employee Management System' });
 });
 
-var addRouter = require("./controller/add.js");
+var subscribeRouter = require("./controller/subscribe.js");
 
 myapp.use('/', router)
-myapp.use('/add', addRouter)
+myapp.use('/subscribe', subscribeRouter)
 
-myapp.listen(3000);
+myapp.listen(80);
