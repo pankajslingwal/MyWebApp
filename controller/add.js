@@ -1,6 +1,8 @@
-module.exports = function (router) {
-    router.get('/add', function (ctx) {
-        ctx.state = { pagetitle: 'Add Employee', heading: 'Add new Employee' }
-        return ctx.render("add.hbs");
-    });
-}
+const EXPRESS = require('express')
+var router = EXPRESS.Router()
+
+router.get('/', function (req, res, next) {
+    res.render('add', { pagetitle: 'Add Page', heading: 'Employee Adding System' });
+});
+
+module.exports = router;
