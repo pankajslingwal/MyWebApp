@@ -24,10 +24,5 @@
   "bugs": {
     "url": "https://github.com/pankajslingwal/MyWebApp/issues"
   },
-  "homepage": "https://github.com/pankajslingwal/MyWebApp#readme",
-  "babel": {
-    "presets": [
-      "env"
-    ]
-  }
-}
+  "homepage": "https://github.com/pankajslingwal/MyWebApp#readme"
+ }
