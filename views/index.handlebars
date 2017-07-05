@@ -1,20 +1,35 @@
 <script>
         angular.module('MyWebApp', ['ngMessages'])
-          .controller('MyWebAppController', ['$scope', function($scope) {
+          .controller('MyWebAppController', ['$scope','$http','$window', function($scope,$http,$window) {
+            $scope.user = {};
+            $scope.results = [];
+
             $scope.email = {
-              text: 'me@mycompany.com'
+              text: 'sample@sample.com'
             };
 
-            $scope.submit = function() {
-              if ($scope.email) {
-                return res.redirect('/subscribe');
-              }
-            };
+            var req = {
+            method: 'GET',
+            url: 'http://localhost:3000/get',
+            headers: {
+              'Content-Type': undefined
+            },
+              data: { test: 'test' }
+            }
+
+            $scope.search = function () {
+              $http(req).then(function mySuccess(response) {
+                //reirect to /subscribe
+                  $window.location.href = '/subscribe';
+                }, function myError(response) {
+                console.log("pankaj1");
+              });
+            }
 
           }]);
   </script>
   <div ng-app="MyWebApp">
-        <form name="myForm" class="form-horizontal" ng-controller="MyWebAppController" acion="/subscribe" method="post">
+        <form name="myForm" class="form-horizontal" ng-controller="MyWebAppController" ng-submit="search()" >
         <fieldset>
         <div class="form-group">
             <div class="col-md-4">
@@ -27,7 +42,8 @@
         <div class="form-group">
         <label class="col-md-4 control-label" for="textinput">Email address:</label>  
         <div class="col-md-4">
-        <input id="textinput" name="input" ng-model="email.text" type="email" placeholder="placeholder" class="form-control input-md" required>
+        <input id="textinput" name="input" ng-model="email.text" type="email" placeholder="me@mycompany.com" class="form-control input-md" required>
+        
         <br/>
         
         {{!--<p ng-bind="myForm.input.$valid"></p>--}}
@@ -46,7 +62,7 @@
         <span class="help-block">Enter your corporate email id for registration</span>
         </div>
         <div class="col-md-4">
-            <button id="singlebutton" name="singlebutton" class="btn btn-primary" type="submit" value="Submit" >Submit</button>
+            <button id="singlebutton" name="singlebutton" class="btn btn-primary" type="submit" value="Signup" >SignUp</button>
         </div>
         </div>
 
