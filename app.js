@@ -19,7 +19,7 @@ myapp.set('view engine', 'handlebars');
 
 router.get('/', function (req, res, next) {
   res.render('index', { pagetitle: 'HomePage', heading: 'Employee Management System' });
-});
+}); 
 
 var subscribeRouter = require("./controller/subscribe.js");
 

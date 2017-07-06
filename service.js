@@ -2,14 +2,16 @@
 const EXPRESS = require('express');
 
 const path = require("path");
+const BODYPARSER = require('body-parser');
 
 var myapp = new EXPRESS(); 
+myapp.use(BODYPARSER.json());
 var router = EXPRESS.Router();
 
 var allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With,email');
 
     // intercept OPTIONS method
     if ('OPTIONS' == req.method) {
@@ -33,7 +35,9 @@ router.get('/', function (req, res, next) {
 
 var getRouter = require("./controller/service/get.js");
 
+
 myapp.use(allowCrossDomain)
+
 myapp.use('/', router)
 myapp.use('/', getRouter)
 myapp.listen(3000);

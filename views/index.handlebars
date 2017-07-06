@@ -5,24 +5,32 @@
             $scope.results = [];
 
             $scope.email = {
-              text: 'sample@sample.com'
+              text: 'test@test.com'
             };
 
             var req = {
             method: 'GET',
             url: 'http://localhost:3000/get',
             headers: {
-              'Content-Type': undefined
-            },
-              data: { test: 'test' }
+              'Content-Type': 'application/json'
+              } 
             }
+
+            req.headers.email = $scope.emailInput;
 
             $scope.search = function () {
               $http(req).then(function mySuccess(response) {
-                //reirect to /subscribe
-                  $window.location.href = '/subscribe';
+                    if(response != null && response.data != null && response.data.code == '200')
+                    {
+                        $window.location.href = '/subscribe';
+                    }
+                    else{
+                      //Make method that takes error code from response and show error
+                      $window.location.href = '/error';
+                    }
                 }, function myError(response) {
-                console.log("pankaj1");
+                  console.log(response);
+                console.log("Some service error");
               });
             }
 
@@ -42,7 +50,8 @@
         <div class="form-group">
         <label class="col-md-4 control-label" for="textinput">Email address:</label>  
         <div class="col-md-4">
-        <input id="textinput" name="input" ng-model="email.text" type="email" placeholder="me@mycompany.com" class="form-control input-md" required>
+        <input id="textinput" name="input" ng-model="emailInput" type="email" placeholder="me@mycompany.com" class="form-control input-md" required>
+        
         
         <br/>
         
