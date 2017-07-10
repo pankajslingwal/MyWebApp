@@ -10,7 +10,6 @@ router.get('/get', function (req, res, next) {
     var email = req.headers.email;    
     console.log(email);
     bucket.get(email, function (err, result) {
-           
            if(err)
            {
                 var respJSON = {

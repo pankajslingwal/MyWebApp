@@ -1,1 +1,17 @@
+<script>
+        angular.module('MyWebApp1', ['ngMessages'])
+          .controller('MyWebAppController1', ['$scope','$http','$window', function($scope,$http,$window) {
+
+            $scope.subscribedEmail = $window.sessionStorage.getItem("authenticatedEmail");
+
+          }]);
+  </script>
+  
 Hello ADD page, {{heading}}!
+<div ng-app="MyWebApp1">
+    <div ng-controller="MyWebAppController1">
+        <p ng-model="subscribedEmail"></p>
+    </div>
+</div>
+
+

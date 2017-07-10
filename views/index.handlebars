@@ -8,34 +8,36 @@
               text: 'test@test.com'
             };
 
+            $scope.ifEmailExist = false;
+
             var req = {
             method: 'GET',
             url: 'http://localhost:3000/get',
             headers: {
               'Content-Type': 'application/json'
               } 
-            }
-
-            req.headers.email = $scope.emailInput;
+            }           
 
             $scope.search = function () {
+              req.headers.email = $scope.emailInput;
               $http(req).then(function mySuccess(response) {
-                    if(response != null && response.data != null && response.data.code == '200')
+                    if(response != null && response.data != null && response.data.code != '200')
                     {
+                        $window.sessionStorage.setItem("authenticatedEmail", $scope.emailInput);
                         $window.location.href = '/subscribe';
                     }
-                    else{
-                      //Make method that takes error code from response and show error
-                      $window.location.href = '/error';
+                    else
+                    {
+                      $scope.ifEmailExist = true;
                     }
                 }, function myError(response) {
-                  console.log(response);
-                console.log("Some service error");
+                  $window.location.href = '/error';
               });
             }
 
           }]);
   </script>
+
   <div ng-app="MyWebApp">
         <form name="myForm" class="form-horizontal" ng-controller="MyWebAppController" ng-submit="search()" >
         <fieldset>
@@ -66,6 +68,7 @@
         <div role="alert" class="msg-block" ng-messages="myForm.input.$error" style="color:maroon; display: inline-block;">
           <div ng-message="required">The Email field is required</div>
           <div ng-message="email" >Email format is wrong</div>
+          <div ng-if="ifEmailExist" >Email already subscribed with us</div>
         </div>
 
         <span class="help-block">Enter your corporate email id for registration</span>

@@ -22,7 +22,6 @@ var allowCrossDomain = function(req, res, next) {
     }
 };
 
-
 //Create JSON response here for Email Validation
 //Define dirrent route /EmailValidation
 //Implement security
