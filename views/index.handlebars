@@ -1,6 +1,5 @@
 <script>
-        angular.module('MyWebApp', ['ngMessages'])
-          .controller('MyWebAppController', ['$scope','$http','$window', function($scope,$http,$window) {
+        MyWebApp.controller('MyWebAppController', ['$scope','$http','$window','myFactory', function($scope,$http,$window,myFactory) {
             $scope.user = {};
             $scope.results = [];
 
@@ -23,8 +22,9 @@
               $http(req).then(function mySuccess(response) {
                     if(response != null && response.data != null && response.data.code != '200')
                     {
-                        $window.sessionStorage.setItem("authenticatedEmail", $scope.emailInput);
-                        $window.location.href = '/subscribe';
+                        //console.log('Inside');
+                        //myFactory.setEmail($scope.emailInput);
+                        $window.location.href = '/subscribe?email=' + $scope.emailInput;
                     }
                     else
                     {
