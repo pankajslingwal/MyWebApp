@@ -30,4 +30,28 @@ router.get('/get', function (req, res, next) {
         });
 });  
 
+router.get('/create', function (req, res, next) {
+    var email = req.headers.email;    
+    console.log(email);
+    bucket.get(email, function (err, result) {
+           if(err)
+           {
+                var respJSON = {
+                    code: err.code,
+                    data:null
+                }
+               
+                res.send(respJSON); 
+           }
+           else
+           {
+               var respJSON = {
+                    code: 200,
+                    data : JSON.stringify(result.value)
+                }
+               res.send(respJSON); 
+           }           
+        });
+});  
+
 module.exports = router;

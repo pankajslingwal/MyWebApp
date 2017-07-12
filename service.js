@@ -32,11 +32,11 @@ router.get('/', function (req, res, next) {
   res.send("Invalid Method Called");
 });
 
-var getRouter = require("./controller/service/get.js");
+var subscribeServiceRoutes = require("./service/get.js");
 
 
 myapp.use(allowCrossDomain)
 
 myapp.use('/', router)
-myapp.use('/', getRouter)
+myapp.use('/', subscribeServiceRoutes)
 myapp.listen(3000);

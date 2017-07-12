@@ -1,16 +1,3 @@
-<script>
-        MyWebApp.controller('SubscribeController', ['$scope','$http','$window', '$location','myFactory', function($scope,$http,$window,$location,myFactory) {
-            //console.log('Inside 2');
-            //console.log('Inside 2 getEmail' + myFactory.getEmail());
-            //$scope.subscribedEmail = myFactory.getEmail();
-            console.log($location.search());
-            console.log($location.search('emailid'));
-            console.log($location.search()['emailid']);
-            
-            $scope.inputEmail = $location.search()['emailid'];
-          }]);
-  </script>
-  
 <div class="container" ng-app="MyWebApp">
             <form class="form-horizontal" role="form" ng-controller="SubscribeController">
                 <h2>Registration Form</h2>

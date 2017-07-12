@@ -1,46 +1,4 @@
-<script>
-        MyWebApp.controller('MyWebAppController', ['$scope','$http','$window','myFactory', function($scope,$http,$window,myFactory) {
-            $scope.user = {};
-            $scope.results = [];
-
-            $scope.email = {
-              text: 'test@test.com'
-            };
-
-            $scope.ifEmailExist = false;
-
-            var req = {
-            method: 'GET',
-            url: 'http://localhost:3000/get',
-            headers: {
-              'Content-Type': 'application/json'
-              } 
-            }           
-
-            $scope.search = function () {
-              req.headers.email = $scope.emailInput;
-              $http(req).then(function mySuccess(response) {
-                    if(response != null && response.data != null && response.data.code != '200')
-                    {
-                        //console.log('Inside');
-                        //myFactory.setEmail($scope.emailInput);
-                        console.log($scope.emailInput);
-                        
-                        $window.location.href = '/subscribe?emailid=' + encodeURIComponent($scope.emailInput);
-                    }
-                    else
-                    {
-                      $scope.ifEmailExist = true;
-                    }
-                }, function myError(response) {
-                  $window.location.href = '/error';
-              });
-            }
-
-          }]);
-  </script>
-
-  <div ng-app="MyWebApp">
+<div ng-app="MyWebApp">
         <form name="myForm" class="form-horizontal" ng-controller="MyWebAppController" ng-submit="search()" >
         <fieldset>
         <div class="form-group">
