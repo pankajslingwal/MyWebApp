@@ -24,7 +24,9 @@
                     {
                         //console.log('Inside');
                         //myFactory.setEmail($scope.emailInput);
-                        $window.location.href = '/subscribe?email=' + $scope.emailInput;
+                        console.log($scope.emailInput);
+                        
+                        $window.location.href = '/subscribe?emailid=' + encodeURIComponent($scope.emailInput);
                     }
                     else
                     {

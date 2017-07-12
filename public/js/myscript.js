@@ -1,5 +1,9 @@
 var MyWebApp = angular.module('MyWebApp', ['ngMessages']);
 
+// MyWebApp.config(['$locationProvider', function($locationProvider) {
+//         $locationProvider.html5Mode(true);
+//     }]);
+
 MyWebApp.factory('myFactory', function(){
     var savedData = {}
     var emailAddress;

@@ -1,8 +1,13 @@
 <script>
-        MyWebApp.controller('SubscribeController', ['$scope','$http','$window','myFactory', function($scope,$http,$window,myFactory) {
+        MyWebApp.controller('SubscribeController', ['$scope','$http','$window', '$location','myFactory', function($scope,$http,$window,$location,myFactory) {
             //console.log('Inside 2');
             //console.log('Inside 2 getEmail' + myFactory.getEmail());
             //$scope.subscribedEmail = myFactory.getEmail();
+            console.log($location.search());
+            console.log($location.search('emailid'));
+            console.log($location.search()['emailid']);
+            
+            $scope.inputEmail = $location.search()['emailid'];
           }]);
   </script>
   
@@ -19,7 +24,7 @@
                 <div class="form-group">
                     <label for="email" class="col-sm-3 control-label">Email</label>
                     <div class="col-sm-9">
-                        <input type="email" id="email" placeholder="Email" class="form-control">
+                        <input type="email" id="email" placeholder="Email" class="form-control" ng-model="inputEmail">
                     </div>
                 </div>
                 <div class="form-group">
