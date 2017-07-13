@@ -57,6 +57,12 @@ MyWebApp.controller('MyWebAppController', ['$scope','$http','$window','myFactory
             console.log($location.search());
             
             $scope.inputEmail = $location.search().emailid;
+
+            if($scope.inputEmail == '')
+            {
+                $window.location.href = '/';
+            }
+
           }]);
 
 
