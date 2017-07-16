@@ -21,7 +21,7 @@ MyWebApp.controller('MyWebAppController', ['$scope','$http','$window','myFactory
 
             var req = {
             method: 'GET',
-            url: 'http://localhost:3000/get',
+            url: 'http://localhost:3000/validate',
             headers: {
               'Content-Type': 'application/json'
               } 
