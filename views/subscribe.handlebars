@@ -1,5 +1,5 @@
 <div class="container" ng-app="MyWebApp">
-            <form class="form-horizontal" role="form" ng-controller="SubscribeController">
+            <form class="form-horizontal" role="form" ng-controller="SubscribeController" method="post" action="/enroll">
                 <h2>Registration Form</h2>
                 <div class="form-group">
                     <label for="firstName" class="col-sm-3 control-label">Full Name</label>
@@ -11,7 +11,7 @@
                 <div class="form-group">
                     <label for="email" class="col-sm-3 control-label">Email</label>
                     <div class="col-sm-9">
-                        <input type="email" id="email" placeholder="Email" class="form-control" ng-model="inputEmail">
+                        <input type="email" id="email" name="email" placeholder="Email" class="form-control" ng-model="inputEmail">
                     </div>
                 </div>
                 <div class="form-group">

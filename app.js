@@ -2,9 +2,13 @@
 const EXPRESS = require('express');
 const EXPHBS  = require('express-handlebars');
 const path = require("path");
+var BODYPARSER = require("body-parser");
 
 var myapp = new EXPRESS(); 
 var router = EXPRESS.Router();
+
+myapp.use(BODYPARSER.urlencoded({ extended: true }));
+myapp.use(BODYPARSER.json());
 
 myapp.use(EXPRESS.static(path.join(__dirname, 'public')));
 
@@ -21,9 +25,9 @@ router.get('/', function (req, res, next) {
   res.render('index', { pagetitle: 'HomePage', heading: 'Employee Management System' });
 }); 
 
-var subscribeRouter = require("./controller/subscribe.js");
+var enrollRouter = require("./controller/enroll.js");
 
 myapp.use('/', router)
-myapp.use('/subscribe', subscribeRouter)
+myapp.use('/enroll', enrollRouter)
 
 myapp.listen(80);

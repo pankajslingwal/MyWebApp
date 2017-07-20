@@ -36,7 +36,7 @@ MyWebApp.controller('MyWebAppController', ['$scope','$http','$window','myFactory
                         //myFactory.setEmail($scope.emailInput);
                         console.log($scope.emailInput);
                         
-                        $window.location.href = '/subscribe?emailid=' + encodeURIComponent($scope.emailInput);
+                        $window.location.href = '/enroll?emailid=' + encodeURIComponent($scope.emailInput);
                     }
                     else
                     {
@@ -62,6 +62,27 @@ MyWebApp.controller('MyWebAppController', ['$scope','$http','$window','myFactory
             {
                 $window.location.href = '/';
             }
+
+            //Collect all form input values and call /Create service
+            // $scope.subscribe = function () {
+            //   req.headers.email = $scope.emailInput;
+            //   $http(req).then(function mySuccess(response) {
+            //         if(response != null && response.data != null && response.data.code != '200')
+            //         {
+            //             //console.log('Inside');
+            //             //myFactory.setEmail($scope.emailInput);
+            //             console.log($scope.emailInput);
+                        
+            //             $window.location.href = '/enroll?emailid=' + encodeURIComponent($scope.emailInput);
+            //         }
+            //         else
+            //         {
+            //           $scope.ifEmailExist = true;
+            //         }
+            //     }, function myError(response) {
+            //       $window.location.href = '/error';
+            //   });
+            // }
 
           }]);
 
