@@ -17,9 +17,10 @@ router.post('/', function (req, res, next) {
     //create service will take this member object
     //varefy if not registered
     //send response based on that
-    
+    console.log('1');
      form.parse(req, function(err, fields, files) {
-         Console.log(fields);
+         console.log('2');
+         console.log(fields);
       res.writeHead(200, {'content-type': 'text/plain'});
       res.write('form data:\n\n');
       res.end(util.inspect({fields: fields, files: files}));
