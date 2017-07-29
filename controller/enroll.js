@@ -28,6 +28,15 @@ router.post('/', function (req, res, next) {
 
      
 
+    //Or use formidable to get all form object
+
+    //try to build this form from react JS
+    ///Validate form here
+
+
+    // if ok send data directly to couchbase to save
+
+
     res.render('subscribe', { pagetitle: 'Post Subscribe Page', heading: 'Post Subscribe to Emails' });
 });
 
