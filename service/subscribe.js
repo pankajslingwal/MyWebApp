@@ -57,6 +57,7 @@ router.get('/get', function (req, res, next) {
 
 router.get('/create', function (req, res, next) {
     var formdata = req.headers.formdata;    
+    
     console.log(formdata);
     
     bucket.upsert('pankaj_test101', formdata,
