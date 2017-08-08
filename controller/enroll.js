@@ -29,7 +29,7 @@ router.post('/', function (req, res, next) {
         host: 'http://localhost:3000',
         path: '/create'
         };
-        options.headers['formdata'] = 'Custom Header Demo works';
+        options.headers.formdata = 'Custom Header Demo works';
 
         callback = function(response) {
             var str = ''
