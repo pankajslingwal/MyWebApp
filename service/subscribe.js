@@ -3,6 +3,8 @@ var router = EXPRESS.Router()
 var couchbase = require('couchbase')
 var cluster = new couchbase.Cluster('http://localhost:8091/');
 var bucket = cluster.openBucket('MyNodeJS','Sapient201@'); 
+//Username - Administrator, Sapient201@
+
 //var N1qlQuery = couchbase.N1qlQuery;
 
 //Create one more method for just to check if record exist, response will be just true false.
