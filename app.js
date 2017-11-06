@@ -6,7 +6,7 @@ const path = require('path');
 //var BODYPARSER = require("body-parser");
 
 var myapp = new EXPRESS(); 
-var router = EXPRESS.Router();
+var router = EXPRESS.Router(); 
 
 //myapp.use(BODYPARSER.urlencoded({ extended: true }));
 //myapp.use(BODYPARSER.json());
@@ -17,7 +17,7 @@ myapp.use(EXPRESS.static(path.join(__dirname, 'public')));
 var hbs = EXPHBS.create({
     defaultLayout: 'main'
   }
-);
+); 
 
 myapp.engine('handlebars', hbs.engine);
 myapp.set('view engine', 'handlebars');

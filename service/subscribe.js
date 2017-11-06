@@ -56,13 +56,12 @@ router.get('/get', function (req, res, next) {
            }           
         });
 });  
-
-router.get('/create', function (req, res, next) {
-    var formdata = req.headers.formdata;    
+ 
+router.post('/create', function (req, res, next) {
     
-    console.log(formdata);
+    console.log('email id received: ' + req.body.email); 
     
-    bucket.upsert('pankaj_test101', formdata,
+    bucket.upsert(req.body.email, 'data to save inside json body',
     function (err, result) {
         if(err)
         {
@@ -71,7 +70,7 @@ router.get('/create', function (req, res, next) {
                     data:null
                 }
             
-                res.send(respJSON); 
+            res.send(respJSON);
         }
         else
         {
@@ -79,7 +78,7 @@ router.get('/create', function (req, res, next) {
                         code: 200,
                         data : null
                     }
-                res.send(respJSON); 
+            res.send(respJSON); 
         }
     });
 

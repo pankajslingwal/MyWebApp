@@ -5,7 +5,9 @@ const path = require("path");
 const BODYPARSER = require('body-parser');
 
 var myapp = new EXPRESS(); 
+myapp.use(BODYPARSER.json({ type: 'application/*+json' }))
 myapp.use(BODYPARSER.json());
+
 var router = EXPRESS.Router();
 
 var allowCrossDomain = function(req, res, next) {
@@ -15,10 +17,10 @@ var allowCrossDomain = function(req, res, next) {
 
     // intercept OPTIONS method
     if ('OPTIONS' == req.method) {
-      res.send(200);
+      res.send(200); 
     }
     else {
-      next();
+      next();  
     }
 };
 

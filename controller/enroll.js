@@ -5,6 +5,7 @@ const util = require('util');
 var request = require('request');
 var formidable = require('formidable');
 var http = require('http');
+var querystring = require('querystring');
 
 router.get('/', function (req, res, next) {
     res.render('subscribe', { pagetitle: 'Subscribe Page', heading: 'Subscribe to Emails' });
@@ -14,43 +15,38 @@ router.get('/', function (req, res, next) {
 router.post('/', function (req, res, next) {
     var form = new formidable.IncomingForm();
 
-    //  form.parse(req, function(err, fields, files) { 
-    //   res.writeHead(200, {'content-type': 'text/plain'});
-    //   res.write('form data:\n\n');
-    //   res.end(util.inspect({fields: fields, files: files}));
-    // });
-
     //Create http request to just save data in couchbase
+    form.parse(req, function(err, fields, files) {
 
-    
-
-    form.parse(req, function(err, fields, files) { 
         var options = {
-        host: 'http://localhost:3000',
-        path: '/create'
-        };
-        options.headers.formdata = 'Custom Header Demo works';
-
-        callback = function(response) {
-            var str = ''
-            response.on('data', function (chunk) {
-                str += chunk;
-            });
-
-            response.on('end', function () {
-                console.log(str);
-            });
+        host: 'localhost',
+        port: 3000,
+        path: '/create',
+        method: 'POST', 
+         headers: {
+            'Content-Type': 'application/json'
         }
+        }; 
 
-        var req = http.request(options, callback);
+        var req = http.request(options, function(res) {
+        //console.log('Status: ' + res.statusCode);
+        //console.log('Headers: ' + JSON.stringify(res.headers));
+        res.setEncoding('utf8');
+        res.on('data', function (body) {
+            //redirect to success
+            console.log('reidrect to success');
+            res.redirect('/UserHomePage'); 
+        });
+        });
+
+        req.on('error', function(e) {
+
+        //show error on Top and enable email id text box
+        });
+        
+        req.write(JSON.stringify(fields));
         req.end();
 
-        // http.request('http://localhost:3000/create', function(response) {
-        //     //Redirect to confirmation page
-        //     response.pipe(res);
-        // }).on('error', function(e) {
-        //     res.sendStatus(500);
-        // }).end();
     });
 
     //res.render('subscribe', { pagetitle: 'Post Subscribe Page', heading: 'Post Subscribe to Emails' });
