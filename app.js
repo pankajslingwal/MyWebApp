@@ -27,6 +27,10 @@ router.get('/', function (req, res, next) {
   res.render('index', { pagetitle: 'HomePage', heading: 'Employee Management System' });
 }); 
 
+router.get('/success', function (req, res, next) {
+    res.render('success', { pagetitle: 'Success Page', heading: 'Thanks for subscribing to Emails' });
+});
+
 var enrollRouter = require("./controller/enroll.js");
 
 myapp.use('/', router)

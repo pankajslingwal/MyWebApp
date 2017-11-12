@@ -18,24 +18,24 @@ router.post('/', function (req, res, next) {
     //Create http request to just save data in couchbase
     form.parse(req, function(err, fields, files) {
 
-        var options = {
+        var options = { 
         host: 'localhost',
         port: 3000,
-        path: '/create',
+        path: '/create', 
         method: 'POST', 
-         headers: {
+         headers: { 
             'Content-Type': 'application/json'
         }
         }; 
 
-        var req = http.request(options, function(res) {
+        var req = http.request(options, function(res1) {
         //console.log('Status: ' + res.statusCode);
         //console.log('Headers: ' + JSON.stringify(res.headers));
-        res.setEncoding('utf8');
-        res.on('data', function (body) {
+        res1.setEncoding('utf8');
+        res1.on('data', function (body) {
             //redirect to success
-            console.log('reidrect to success');
-            res.redirect('/UserHomePage'); 
+            console.log('redirect to success');
+            res.redirect('/success'); 
         });
         });
 
@@ -51,5 +51,8 @@ router.post('/', function (req, res, next) {
 
     //res.render('subscribe', { pagetitle: 'Post Subscribe Page', heading: 'Post Subscribe to Emails' });
 });
+
+
+
 
 module.exports = router;
