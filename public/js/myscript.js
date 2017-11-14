@@ -40,6 +40,7 @@ MyWebApp.controller('MyWebAppController', ['$scope','$http','$window','myFactory
                     }
                     else
                     {
+                      console.log(response.data);
                       $scope.ifEmailExist = true;
                     }
                 }, function myError(response) {

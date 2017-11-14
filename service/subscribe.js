@@ -12,6 +12,7 @@ var bucket = cluster.openBucket('MyNodeJS','Sapient201@');
 router.get('/validate', function (req, res, next) {
     var email = req.headers.email;    
     console.log(email);
+    
     bucket.get(email, function (err, result) {
            if(err)
            {
@@ -36,7 +37,10 @@ router.get('/validate', function (req, res, next) {
 router.get('/get', function (req, res, next) {
     var email = req.headers.email;    
     console.log(email);
+    
     bucket.get(email, function (err, result) {
+
+        
            if(err)
            {
                 var respJSON = {
@@ -61,14 +65,16 @@ router.post('/create', function (req, res, next) {
     
     console.log('email id received: ' + req.body.email); 
     
-    bucket.upsert(req.body.email, 'data to save inside json body',
+    bucket.insert(req.body.email, 'data to save inside json body',
     function (err, result) {
+        
         if(err)
         {
+            
             var respJSON = {
-                    code: err.code,
-                    data:null
-                }
+                code: err.code,
+                data:null
+            }
             
             res.send(respJSON);
         }

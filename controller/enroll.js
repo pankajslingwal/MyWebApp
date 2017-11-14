@@ -26,22 +26,35 @@ router.post('/', function (req, res, next) {
          headers: { 
             'Content-Type': 'application/json'
         }
-        }; 
+        };  
 
         var req = http.request(options, function(res1) {
         //console.log('Status: ' + res.statusCode);
         //console.log('Headers: ' + JSON.stringify(res.headers));
         res1.setEncoding('utf8');
         res1.on('data', function (body) {
-            //redirect to success
-            console.log('redirect to success');
-            res.redirect('/success'); 
+            
+            var fbResponse = JSON.parse(body);
+
+            if(fbResponse.code == 200)
+            {
+                res.redirect('/success'); 
+            }
+            
+            if(fbResponse.code == 12)
+            {
+                res.redirect('/entryalreadyexist'); 
+            }
+            else
+            {
+                res.redirect('/genericmessage');
+            }
+            
         });
-        });
+        }); 
 
         req.on('error', function(e) {
-
-        //show error on Top and enable email id text box
+            res.redirect('/error'); 
         });
         
         req.write(JSON.stringify(fields));
