@@ -6,12 +6,9 @@ var bucket = cluster.openBucket('MyNodeJS','Sapient201@');
 //Username - Administrator, Sapient201@
 
 //var N1qlQuery = couchbase.N1qlQuery;
- 
-//Create one more method for just to check if record exist, response will be just true false.
 
 router.get('/validate', function (req, res, next) {
     var email = req.headers.email;    
-    console.log(email);
     
     bucket.get(email, function (err, result) {
            if(err)
@@ -36,7 +33,6 @@ router.get('/validate', function (req, res, next) {
 
 router.get('/get', function (req, res, next) {
     var email = req.headers.email;    
-    console.log(email);
     
     bucket.get(email, function (err, result) {
 
@@ -62,9 +58,7 @@ router.get('/get', function (req, res, next) {
 });  
  
 router.post('/create', function (req, res, next) {
-    
-    console.log('email id received: ' + req.body.email); 
-    
+        
     bucket.insert(req.body.email, 'data to save inside json body',
     function (err, result) {
         
@@ -75,7 +69,6 @@ router.post('/create', function (req, res, next) {
                 code: err.code,
                 data:null
             }
-            
             res.send(respJSON);
         }
         else
@@ -84,10 +77,11 @@ router.post('/create', function (req, res, next) {
                         code: 200,
                         data : null
                     }
+
             res.send(respJSON); 
         }
     });
-
+ 
 });
 
 module.exports = router;

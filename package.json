@@ -5,10 +5,13 @@
   "main": "app.js",
   "dependencies": {
     "body-parser": "^1.17.2",
+    "cookie-parser": "^1.4.3",
     "couchbase": "^2.3.4",
     "express": "^4.15.3",
     "express-handlebars": "^3.0.0",
+    "express-session": "^1.15.6",
     "formidable": "^1.1.1",
+    "passport": "^0.4.0",
     "request": "^2.81.0",
     "util": "^0.10.3"
   },

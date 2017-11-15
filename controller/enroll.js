@@ -1,23 +1,33 @@
 const EXPRESS = require('express')
 var router = EXPRESS.Router()
-
 const util = require('util');
 var request = require('request');
 var formidable = require('formidable');
 var http = require('http');
 var querystring = require('querystring');
 
+var sess;
+
+
+//Load subscribe for after validation from homepage
 router.get('/', function (req, res, next) {
+    sess=req.session;
     res.render('subscribe', { pagetitle: 'Subscribe Page', heading: 'Subscribe to Emails' });
 });
 
 
+
+//User post back of form with data, redirect to appropriate page
 router.post('/', function (req, res, next) {
+    sess=req.session;
+    
+    
     var form = new formidable.IncomingForm();
 
-    //Create http request to just save data in couchbase
+    
     form.parse(req, function(err, fields, files) {
 
+        
         var options = { 
         host: 'localhost',
         port: 3000,
@@ -29,32 +39,33 @@ router.post('/', function (req, res, next) {
         };  
 
         var req = http.request(options, function(res1) {
-        //console.log('Status: ' + res.statusCode);
-        //console.log('Headers: ' + JSON.stringify(res.headers));
+        
         res1.setEncoding('utf8');
         res1.on('data', function (body) {
             
-            var fbResponse = JSON.parse(body);
+            var createResponse = JSON.parse(body);
 
-            if(fbResponse.code == 200)
+            if(createResponse.code == 200)
             {
-                res.redirect('/success'); 
+                sess.validatedUser = fields;
+                console.log('fields set in session' + sess.validatedUser);
+                return res.redirect('/success');
             }
             
-            if(fbResponse.code == 12)
+            if(createResponse.code == 12)
             {
-                res.redirect('/entryalreadyexist'); 
-            }
+                return res.redirect('/entryalreadyexist'); 
+            } 
             else
             {
-                res.redirect('/genericmessage');
+                return res.redirect('/genericmessage');
             }
             
         });
         }); 
 
         req.on('error', function(e) {
-            res.redirect('/error'); 
+            return res.redirect('/error'); 
         });
         
         req.write(JSON.stringify(fields));
@@ -62,10 +73,7 @@ router.post('/', function (req, res, next) {
 
     });
 
-    //res.render('subscribe', { pagetitle: 'Post Subscribe Page', heading: 'Post Subscribe to Emails' });
 });
-
-
 
 
 module.exports = router;

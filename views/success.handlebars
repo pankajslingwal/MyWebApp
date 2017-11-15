@@ -1,7 +1,35 @@
-<div class="container" >
-<p>Thanks for subscribing to our promotional emails</p>
-ask member to join as a member and make as a skywards member in a separte database
+<div class="container" ng-app="MyWebApp">
+            <form class="form-horizontal" role="form" ng-controller="SubscribeController" method="post" action="/enroll">
+                <h2>Thank you for subscribing to our Employee promotional Email</h2>
+                
+                <h3>Provide more details to become a Silver member</h3>
+                <p>After signup you can login to Employee portal and avail other benefits</p>
+                <div class="form-group">
+                    <label for="password" class="col-sm-3 control-label">Password</label>
+                    <div class="col-sm-9">
+                        <input type="password" id="password" name="password" placeholder="Password" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="confirmpassword" class="col-sm-3 control-label">Password</label>
+                    <div class="col-sm-9">
+                        <input type="password" id="confirmpassword" name="confirmpassword" placeholder="Confirm Password" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-9 col-sm-offset-3">
+                        <button type="submit" class="btn btn-primary btn-block">I want to signup</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-9 col-sm-offset-3">
+                        <button type="submit" class="btn btn-primary btn-block">No Thanks</button>
+                    </div>
+                </div>
+            </form> <!-- /form -->
+        </div> <!-- ./container -->
 
-</div> <!-- ./container -->
+
+
 
 

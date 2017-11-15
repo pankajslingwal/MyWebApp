@@ -42,6 +42,10 @@ MyWebApp.controller('MyWebAppController', ['$scope','$http','$window','myFactory
                     {
                       console.log(response.data);
                       $scope.ifEmailExist = true;
+                      //$window.location.href = '/success';
+
+                      //how to set session variable
+                      //Get from DB and return ???? not sure
                     }
                 }, function myError(response) {
                   $window.location.href = '/error';

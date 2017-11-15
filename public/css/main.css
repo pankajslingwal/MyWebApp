@@ -10,7 +10,22 @@ body {
     border-radius: 0.3em;
 }
 
-*[role="form"] h2 {
+/**[role="form"] h2 {
     margin-left: 5em;
     margin-bottom: 1em;
+}*/
+
+@media (min-width: 992px)
+{
+.col-md-4 {
+    width: 100%;
+}
+}
+
+@media (min-width: 768px)
+{
+.form-horizontal .control-label
+{
+    text-align: left;
+}
 }

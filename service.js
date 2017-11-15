@@ -20,7 +20,7 @@ var allowCrossDomain = function(req, res, next) {
       res.send(200); 
     }
     else {
-      next();  
+      next();   
     }
 }; 
 
