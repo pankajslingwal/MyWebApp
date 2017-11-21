@@ -1,4 +1,4 @@
-// Declartion
+// Declaration
 const EXPRESS = require('express');
 const EXPHBS  = require('express-handlebars');
 const path = require('path');
