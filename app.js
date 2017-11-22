@@ -8,7 +8,6 @@ var COOKIEPARSER = require("cookie-parser");
 const passport = require('passport');
 
 
-
 // Instance
 var myapp = new EXPRESS(); 
 var router = EXPRESS.Router(); 
@@ -18,10 +17,11 @@ var sess;
 myapp.use(EXPRESS.static(path.join(__dirname, 'public')));
 myapp.use(COOKIEPARSER());
 myapp.use(BODYPARSER.urlencoded({ extended: true }));
-myapp.use({ secret: 'ssshhhhh', resave: true, saveUninitialized: true });
+myapp.use(session({ secret: 'ssshhhhh', resave:false, saveUninitialized:true}));
 myapp.use(passport.initialize());
 myapp.use(passport.session());
 
+//https://github.com/passport/express-4.x-local-example/blob/master/server.js
 
 var hbs = EXPHBS.create({
     defaultLayout: 'main'
@@ -68,8 +68,10 @@ router.post('/success', function (req, res, next) {
 });
 
 var enrollRouter = require("./controller/enroll.js");
+var loginRouter = require("./controller/login.js");
 
 myapp.use('/', router)
 myapp.use('/enroll', enrollRouter)
+myapp.use('/login', loginRouter)
 
 myapp.listen(80);
