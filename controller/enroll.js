@@ -26,7 +26,6 @@ router.post('/', function (req, res, next) {
 
     
     form.parse(req, function(err, fields, files) {
-
         
         var options = { 
         host: 'localhost',
@@ -42,7 +41,7 @@ router.post('/', function (req, res, next) {
         
         res1.setEncoding('utf8');
         res1.on('data', function (body) {
-            
+
             var createResponse = JSON.parse(body);
 
             if(createResponse.code == 200)

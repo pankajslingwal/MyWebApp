@@ -9,7 +9,7 @@ const passport = require('passport');
 
 
 // Instance
-var myapp = new EXPRESS(); 
+var myapp = new EXPRESS();  
 var router = EXPRESS.Router(); 
 var sess;
 
@@ -32,7 +32,7 @@ myapp.engine('handlebars', hbs.engine);
 myapp.set('view engine', 'handlebars'); 
 
 
-
+ 
 
 //Routing
 router.get('/', function (req, res, next) {

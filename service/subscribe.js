@@ -56,9 +56,9 @@ router.get('/get', function (req, res, next) {
            }           
         });
 });  
- 
+
 router.post('/create', function (req, res, next) {
-        
+    console.log(req.body.email);
     bucket.insert(req.body.email, 'data to save inside json body',
     function (err, result) {
         
