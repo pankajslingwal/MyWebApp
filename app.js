@@ -16,12 +16,12 @@ var sess;
 //Adding module to application
 myapp.use(EXPRESS.static(path.join(__dirname, 'public')));
 myapp.use(COOKIEPARSER());
-myapp.use(BODYPARSER.urlencoded({ extended: true }));
-myapp.use(session({ secret: 'ssshhhhh', resave:false, saveUninitialized:true}));
+//myapp.use(BODYPARSER.urlencoded({ extended: true }));
+myapp.use(session({ secret: 'ssshhhhh', resave:false, saveUninitialized:false}));
 myapp.use(passport.initialize());
 myapp.use(passport.session());
 
-//https://github.com/passport/express-4.x-local-example/blob/master/server.js
+
 
 var hbs = EXPHBS.create({
     defaultLayout: 'main'

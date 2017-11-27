@@ -37,12 +37,12 @@ router.get('/get', function (req, res, next) {
     bucket.get(email, function (err, result) {
 
         
-           if(err)
+           if(err) 
            {
                 var respJSON = {
                     code: err.code,
                     data:null
-                }
+                } 
                
                 res.send(respJSON); 
            }

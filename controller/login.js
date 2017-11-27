@@ -1,11 +1,12 @@
 const EXPRESS = require('express')
 var router = EXPRESS.Router()
-const util = require('util');
-var request = require('request');
-var formidable = require('formidable');
-var http = require('http');
-var querystring = require('querystring');
-
+//const util = require('util');
+//var request = require('request');
+//var formidable = require('formidable');
+//var http = require('http');
+//var querystring = require('querystring');
+//https://github.com/passport/express-4.x-local-example/blob/master/server.js
+var db = require('./db/index.js');
 const passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
@@ -29,12 +30,11 @@ passport.serializeUser(function(user, cb) {
 });
 
 passport.deserializeUser(function(id, cb) {
-  db.users.findById(id, function (err, user) {
+  db.findById(id, function (err, user) {
     if (err) { return cb(err); }
     cb(null, user);
   });
 });
-
 
 
 router.get('/', function (req, res, next) {
