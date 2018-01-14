@@ -3,7 +3,7 @@ var router = EXPRESS.Router()
 var couchbase = require('couchbase')
 var cluster = new couchbase.Cluster('http://localhost:8091/');
 var bucket = cluster.openBucket('MyNodeJS','Sapient201@'); 
-// var bucketLogin = cluster.openBucket('MyNodeJSLogin','Sapient201@'); 
+//var bucketLogin = cluster.openBucket('MyNodeJSLogin','Sapient201@'); 
 //const uuidv1 = require('uuid/v1');
 
 //Username - Administrator, Sapient201@
