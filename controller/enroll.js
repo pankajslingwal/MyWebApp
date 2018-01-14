@@ -20,13 +20,9 @@ router.get('/', function (req, res, next) {
 //User post back of form with data, redirect to appropriate page
 router.post('/', function (req, res, next) {
     sess=req.session;
-    console.log('y');
     var form = new formidable.IncomingForm();
-    console.log('x');
     form.parse(req, function(err, fields, files) {
-        console.log('1');
         console.log(err);
-        console.log('2');
         
         var options = { 
         host: 'localhost',
@@ -36,7 +32,7 @@ router.post('/', function (req, res, next) {
          headers: { 
             'Content-Type': 'application/json'
             }
-        };  
+        };
 
         var req = http.request(options, function(res1) {
         
@@ -58,6 +54,7 @@ router.post('/', function (req, res, next) {
             }
             else
             {
+                //console.log(createResponse);
                 return res.redirect('/genericmessage');
             }
             

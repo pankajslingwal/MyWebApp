@@ -3,6 +3,9 @@ var router = EXPRESS.Router()
 var couchbase = require('couchbase')
 var cluster = new couchbase.Cluster('http://localhost:8091/');
 var bucket = cluster.openBucket('MyNodeJS','Sapient201@'); 
+// var bucketLogin = cluster.openBucket('MyNodeJSLogin','Sapient201@'); 
+//const uuidv1 = require('uuid/v1');
+
 //Username - Administrator, Sapient201@
 
 //var N1qlQuery = couchbase.N1qlQuery;
@@ -55,16 +58,15 @@ router.get('/get', function (req, res, next) {
                res.send(respJSON); 
            }           
         });
-});  
+});
 
 router.post('/create', function (req, res, next) {
-    console.log(req.body.email);
-    bucket.insert(req.body.email, 'data to save inside json body',
+    //console.log(req.body.email);
+    //console.log(uuidv1());
+    bucket.insert(req.body.email, req.body,
     function (err, result) {
-        
         if(err)
         {
-            
             var respJSON = {
                 code: err.code,
                 data:null

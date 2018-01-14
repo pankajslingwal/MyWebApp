@@ -31,9 +31,6 @@ var hbs = EXPHBS.create({
 myapp.engine('handlebars', hbs.engine);
 myapp.set('view engine', 'handlebars'); 
 
-
- 
-
 //Routing
 router.get('/', function (req, res, next) {
   sess=req.session;

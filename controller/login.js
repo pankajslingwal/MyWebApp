@@ -6,7 +6,7 @@ var router = EXPRESS.Router()
 //var http = require('http');
 //var querystring = require('querystring');
 //https://github.com/passport/express-4.x-local-example/blob/master/server.js
-var db = require('./db/index.js');
+var db = require('../db/index.js');
 const passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
