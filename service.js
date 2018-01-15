@@ -35,10 +35,12 @@ router.get('/', function (req, res, next) {
 });
 
 var subscribeServiceRoutes = require("./service/subscribe.js");
+var loginServiceRoutes = require("./service/login.js");
 
 
 myapp.use(allowCrossDomain)
 
 myapp.use('/', router)
 myapp.use('/', subscribeServiceRoutes)
+myapp.use('/', loginServiceRoutes)
 myapp.listen(3000);

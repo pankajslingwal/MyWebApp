@@ -22,7 +22,6 @@ router.post('/', function (req, res, next) {
     sess=req.session;
     var form = new formidable.IncomingForm();
     form.parse(req, function(err, fields, files) {
-        console.log(err);
         
         var options = { 
         host: 'localhost',
@@ -44,8 +43,7 @@ router.post('/', function (req, res, next) {
             if(createResponse.code == 200)
             {
                 sess.validatedUser = fields;
-                console.log('fields set in session' + sess.validatedUser);
-                return res.redirect('/success');
+                return res.redirect(301, '/success');
             }
             
             if(createResponse.code == 12)

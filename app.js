@@ -6,6 +6,7 @@ var session = require('express-session');
 var BODYPARSER = require("body-parser");
 var COOKIEPARSER = require("cookie-parser");
 const passport = require('passport');
+var http = require('http');
 
 
 // Instance
@@ -40,7 +41,7 @@ router.get('/', function (req, res, next) {
 
 router.get('/success', function (req, res, next) {
     sess=req.session;
-    //console.log(sess.validatedUser);
+    
     if(sess.validatedUser == undefined)
     {
       return res.redirect('/');
@@ -51,24 +52,38 @@ router.get('/success', function (req, res, next) {
 
 router.post('/success', function (req, res, next) {
     sess=req.session;
-    //console.log(sess.validatedUser);
     if(sess.validatedUser == undefined)
     {
       return res.redirect('/');
     }
-    
-    //Pass session + password info to server
-    //Create entry in new database using passport library
+    else
+    { 
+        var options = { 
+          host: 'localhost',
+          port: 3000,
+          path: '/createUser', 
+          method: 'POST', 
+          headers: { 
+              'Content-Type': 'application/json'
+              }
+          };
 
-    ///Thankyou for registering and redirect user to logged in page, MY profile
-    //res.render('success', { pagetitle: 'Success Page', heading: 'Thanks for subscribing to Emails' });
+          var req = http.request(options);
+          //req.write(JSON.stringify(sess.validatedUser));
+          req.end();
+        //based on response throw error if user already exist, email id is primary key and password
+        //sess.validatedUser
+        //Create entry in new database using passport library
+        ///Thankyou for registering and redirect user to logged in page, MY profile
+        //res.render('success', { pagetitle: 'Success Page', heading: 'Thanks for subscribing to Emails' });
+    }
 });
 
 var enrollRouter = require("./controller/enroll.js");
-var loginRouter = require("./controller/login.js");
+//var loginRouter = require("./controller/login.js");
 
 myapp.use('/', router)
 myapp.use('/enroll', enrollRouter)
-myapp.use('/login', loginRouter)
+//myapp.use('/login', loginRouter)
 
 myapp.listen(80);
