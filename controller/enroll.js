@@ -19,6 +19,7 @@ router.get('/', function (req, res, next) {
 
 //User post back of form with data, redirect to appropriate page
 router.post('/', function (req, res, next) {
+
     sess=req.session;
     var form = new formidable.IncomingForm();
     form.parse(req, function(err, fields, files) {

@@ -23,7 +23,6 @@ myapp.use(passport.initialize());
 myapp.use(passport.session());
 
 
-
 var hbs = EXPHBS.create({
     defaultLayout: 'main'
   }
@@ -32,12 +31,30 @@ var hbs = EXPHBS.create({
 myapp.engine('handlebars', hbs.engine);
 myapp.set('view engine', 'handlebars'); 
 
-//Routing
+//Routing 
 router.get('/', function (req, res, next) {
   sess=req.session;
   sess.validatedUser = undefined;
   res.render('index', { pagetitle: 'HomePage', heading: 'Employee Management System' });
 }); 
+
+router.get('/user-profile', function (req, res, next) {
+  sess=req.session;
+  if(sess.loggedIn != undefined && sess.loggenInMember!= undefined)
+  {
+    res.render('user-profile', { pagetitle: 'User Prfile', heading: 'User Profile' });
+  }
+  else{
+    res.redirect('/login')
+  }
+  
+}); 
+
+router.get('/login', function (req, res, next) {
+  
+  res.render('login', { pagetitle: 'LogIn', heading: 'LogIN' }); 
+  
+});
 
 router.get('/success', function (req, res, next) {
     sess=req.session;
@@ -68,8 +85,39 @@ router.post('/success', function (req, res, next) {
               }
           };
 
-          var req = http.request(options);
-          //req.write(JSON.stringify(sess.validatedUser));
+          var req = http.request(options, function(res1) {
+        
+          res1.setEncoding('utf8');
+          res1.on('data', function (body) {
+
+            var createResponse = JSON.parse(body);
+
+            if(createResponse.code == 200)
+            {
+                //sess.validatedUser = fields;
+                sess.loggedIn = true;
+                sess.loggenInMember = sess.validatedUser;
+                return res.redirect('/user-profile');
+            }
+            
+            if(createResponse.code == 12)
+            {
+                return res.redirect('/entryalreadyexist'); 
+            }
+            else
+            {
+                //console.log(createResponse);
+                return res.redirect('/genericmessage');
+            }
+            
+          });
+          }); 
+
+          req.on('error', function(e) {
+              return res.redirect('/error'); 
+          });
+
+          req.write(JSON.stringify(sess.validatedUser));
           req.end();
         //based on response throw error if user already exist, email id is primary key and password
         //sess.validatedUser
