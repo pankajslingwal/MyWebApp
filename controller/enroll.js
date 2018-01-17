@@ -53,7 +53,7 @@ router.post('/', function (req, res, next) {
             }
             else
             {
-                //console.log(createResponse);
+                console.log(createResponse);
                 return res.redirect('/genericmessage');
             }
             
