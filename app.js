@@ -35,7 +35,7 @@ myapp.set('view engine', 'handlebars');
 router.get('/', function (req, res, next) {
   sess=req.session;
   sess.validatedUser = undefined;
-  res.render('index', { pagetitle: 'HomePage', heading: 'Subscribe to our Emails });
+  res.render('index', { pagetitle: 'HomePage', heading: 'Subscribe to our Emails '});
 }); 
 
 router.get('/user-profile', function (req, res, next) {
