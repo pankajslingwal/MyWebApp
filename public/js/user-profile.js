@@ -956,29 +956,64 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } //https://www.youtube.com/watch?v=MhkGQAoc7bc
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } //https://www.youtube.com/watch?v=vu_rIMPROoQ
+
+//https://github.com/javascript-playground/remote-data-react-screencasts/blob/master/src/Github.js
+
+var urlForUsername = function urlForUsername(username) {
+  return 'http://localhost:3000/getUser';
+};
+//const urlForUsername = username => 'https://api.github.com/users/${username}'
+
 
 var Layout = function (_React$Component) {
-    _inherits(Layout, _React$Component);
+  _inherits(Layout, _React$Component);
 
-    function Layout() {
-        _classCallCheck(this, Layout);
+  function Layout() {
+    _classCallCheck(this, Layout);
 
-        return _possibleConstructorReturn(this, (Layout.__proto__ || Object.getPrototypeOf(Layout)).apply(this, arguments));
-    }
+    var _this = _possibleConstructorReturn(this, (Layout.__proto__ || Object.getPrototypeOf(Layout)).call(this));
 
-    _createClass(Layout, [{
-        key: "render",
-        value: function render() {
-            return _react2.default.createElement(
-                "h1",
-                null,
-                "It works"
-            );
+    _this.formName = "User Profile Editable Form !!";
+    return _this;
+  }
+
+  _createClass(Layout, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      fetch(urlForUsername(this.props.username)).then(function (response) {
+        if (!response.ok) {
+          throw Error("Network request failed");
         }
-    }]);
 
-    return Layout;
+        return response;
+      }).then(function (d) {
+        return d.json();
+      }).then(function (d) {
+        _this2.setState({
+          githubData: d
+        });
+      }, function () {
+        _this2.setState({
+          requestFailed: true
+        });
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return _react2.default.createElement(
+        "h1",
+        null,
+        "testin - ",
+        this.formName
+      );
+    }
+  }]);
+
+  return Layout;
 }(_react2.default.Component);
 
 var app = document.getElementById('app');
