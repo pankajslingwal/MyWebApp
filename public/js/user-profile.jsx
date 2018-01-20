@@ -13,6 +13,9 @@ class Layout extends React.Component {
     constructor()
     {
         super();
+        this.state = {
+          requestFailed: false
+        }
         this.formName = "User Profile Editable Form !!";
     }
 
@@ -22,16 +25,15 @@ class Layout extends React.Component {
         if (!response.ok) {
           throw Error("Network request failed")
         }
-
         return response
       })
-      .then(d => d.json())
+      .then(d=> d.json())
       .then(d => {
         this.setState({
-          githubData: d
+          userData: JSON.parse(d.data)
         })
       }, () => {
-        this.setState({
+        this.setState({ 
           requestFailed: true
         })
       })
@@ -39,9 +41,24 @@ class Layout extends React.Component {
 
     render()
     {
+      if (this.state.requestFailed)
+      { 
+        return <p>Failed!</p>
+      }
+      if (!this.state.userData)
+      { 
+         return <p>Loading...</p>
+      }
+      
         return (
-            <h1>testin - {this.formName}</h1>
+           <div>
+             <p>{this.state.userData.firstName}</p>
+            <p>{this.state.userData.email}</p>
+            <p>{this.state.userData.birthDate}</p>
+            <p>{this.state.userData.country}</p>
+          </div>     
         );
+        
     }
 }
 

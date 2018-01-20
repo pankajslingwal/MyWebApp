@@ -9,7 +9,7 @@ MyWebApp.config(function($locationProvider) {
 
 
 //Controller for home page, Validation
-MyWebApp.controller('MyWebAppController', ['$scope','$http','$window','myFactory', function($scope,$http,$window,myFactory) {
+MyWebApp.controller('MyWebAppController', ['$scope','$http','$window', function($scope,$http,$window) {
             $scope.user = {};
             $scope.results = [];
 
@@ -32,22 +32,14 @@ MyWebApp.controller('MyWebAppController', ['$scope','$http','$window','myFactory
               $http(req).then(function mySuccess(response) {
                     if(response != null && response.data != null && response.data.code != '200')
                     {
-                        //console.log('Inside');
-                        //myFactory.setEmail($scope.emailInput);
-                        console.log($scope.emailInput);
-                        
                         $window.location.href = '/enroll?emailid=' + encodeURIComponent($scope.emailInput);
                     }
                     else
                     {
-                      console.log(response.data);
                       $scope.ifEmailExist = true;
-                      //$window.location.href = '/success';
-
-                      //how to set session variable
-                      //Get from DB and return ???? not sure
                     }
                 }, function myError(response) {
+                  
                   $window.location.href = '/error';
               });
             }
@@ -55,12 +47,7 @@ MyWebApp.controller('MyWebAppController', ['$scope','$http','$window','myFactory
           }]);
 
 
-          MyWebApp.controller('SubscribeController', ['$scope','$http','$window', '$location','myFactory', function($scope,$http,$window,$location,myFactory) {
-            //console.log('Inside 2');
-            //console.log('Inside 2 getEmail' + myFactory.getEmail());
-            //$scope.subscribedEmail = myFactory.getEmail();
-            console.log($location.search());
-            
+          MyWebApp.controller('SubscribeController', ['$scope','$http','$window', '$location', function($scope,$http,$window,$location) {
             $scope.inputEmail = $location.search().emailid;
 
             if($scope.inputEmail == '')
@@ -68,44 +55,30 @@ MyWebApp.controller('MyWebAppController', ['$scope','$http','$window','myFactory
                 $window.location.href = '/';
             }
 
-            //Collect all form input values and call /Create service
-            // $scope.subscribe = function () {
-            //   req.headers.email = $scope.emailInput;
-            //   $http(req).then(function mySuccess(response) {
-            //         if(response != null && response.data != null && response.data.code != '200')
-            //         {
-            //             //console.log('Inside');
-            //             //myFactory.setEmail($scope.emailInput);
-            //             console.log($scope.emailInput);
-                        
-            //             $window.location.href = '/enroll?emailid=' + encodeURIComponent($scope.emailInput);
-            //         }
-            //         else
-            //         {
-            //           $scope.ifEmailExist = true;
-            //         }
-            //     }, function myError(response) {
-            //       $window.location.href = '/error';
-            //   });
-            // }
-
           }]);
 
+           MyWebApp.controller('RegisterController', ['$scope','$http','$window', '$location', function($scope,$http,$window,$location) {
+           $scope.enter = function () {
+              console.log($scope.myForm.$valid);
+              if($scope.myForm.$valid) {
+                
+                if($scope.Ppassword != $scope.Pconfirmpassword)
+                {
+                    $scope.noMatch = true;
+                }
+                else
+                {
+                  console.log("1");
+                  //post to /success page
+                  var frm = angular.element('#myForm');
+                  frm.submit();
+                }
+              }
+            
+            }
 
-//Controller for Subscribe page, Validation
-MyWebApp.factory('myFactory', function(){
-    var savedData = {}
-    var emailAddress;
+            $scope.exit = function () {
+              $window.location.href = '/';
+            }
 
-    savedData.setEmail = function (emailadd)
-    {
-        emailAddress =emailadd;
-    };
-
-    savedData.getEmail = function ()
-    {
-        return emailAddress
-    };
-
-    return savedData;
-});
+          }]);

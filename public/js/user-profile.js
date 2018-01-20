@@ -974,6 +974,9 @@ var Layout = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (Layout.__proto__ || Object.getPrototypeOf(Layout)).call(this));
 
+    _this.state = {
+      requestFailed: false
+    };
     _this.formName = "User Profile Editable Form !!";
     return _this;
   }
@@ -987,13 +990,12 @@ var Layout = function (_React$Component) {
         if (!response.ok) {
           throw Error("Network request failed");
         }
-
         return response;
       }).then(function (d) {
         return d.json();
       }).then(function (d) {
         _this2.setState({
-          githubData: d
+          userData: JSON.parse(d.data)
         });
       }, function () {
         _this2.setState({
@@ -1004,11 +1006,44 @@ var Layout = function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      if (this.state.requestFailed) {
+        return _react2.default.createElement(
+          "p",
+          null,
+          "Failed!"
+        );
+      }
+      if (!this.state.userData) {
+        return _react2.default.createElement(
+          "p",
+          null,
+          "Loading..."
+        );
+      }
+
       return _react2.default.createElement(
-        "h1",
+        "div",
         null,
-        "testin - ",
-        this.formName
+        _react2.default.createElement(
+          "p",
+          null,
+          this.state.userData.firstName
+        ),
+        _react2.default.createElement(
+          "p",
+          null,
+          this.state.userData.email
+        ),
+        _react2.default.createElement(
+          "p",
+          null,
+          this.state.userData.birthDate
+        ),
+        _react2.default.createElement(
+          "p",
+          null,
+          this.state.userData.country
+        )
       );
     }
   }]);
