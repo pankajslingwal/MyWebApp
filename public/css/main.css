@@ -6,8 +6,20 @@ body {
     max-width: 530px;
     padding: 15px;
     margin: 0 auto;
-    background-color: #fff;
+    background-color: black;
     border-radius: 0.3em;
+}
+
+.form-horizontal .control-label{
+    color:white;
+}
+h3,h2
+{
+    color:yellow;
+}
+
+.form-control{
+    background-color:#ede7e7;
 }
 
 /**[role="form"] h2 {

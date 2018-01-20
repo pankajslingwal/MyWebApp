@@ -47,7 +47,7 @@ router.get('/user-profile', function (req, res, next) {
   else{
     res.redirect('/login')
   }
-  res.render('user-profile', { pagetitle: 'User Prfile', heading: 'User Profile' });
+  //res.render('user-profile', { pagetitle: 'User Prfile', heading: 'User Profile' });
 }); 
 
 router.get('/login', function (req, res, next) {
