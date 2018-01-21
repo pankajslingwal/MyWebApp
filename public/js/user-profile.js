@@ -988,11 +988,12 @@ var Layout = function (_React$Component) {
       var myState2 = this.state.button;
 
       if (myState2) {
-        //control should b e disable by defaultValue
-        //in this loop we have to make them enabled
         this.setState({ button: false });
       } else {
 
+        //show loading icon when in middle processing state
+        //as process done updatea by calling API
+        //show thanks message after this
         //take user input and pouplate user data and submitt
         //disbale user input
         this.setState({ button: true });
@@ -1067,7 +1068,7 @@ var Layout = function (_React$Component) {
             _react2.default.createElement(
               "div",
               { className: "col-sm-6" },
-              _react2.default.createElement("input", { readOnly: true, type: "text", placeholder: "First Name", className: "form-control", defaultValue: this.state.userData.firstName })
+              _react2.default.createElement("input", { disabled: myState, type: "text", placeholder: "First Name", className: "form-control", defaultValue: this.state.userData.firstName })
             )
           ),
           _react2.default.createElement(
@@ -1076,7 +1077,7 @@ var Layout = function (_React$Component) {
             _react2.default.createElement(
               "div",
               { className: "col-sm-6" },
-              _react2.default.createElement("input", { readOnly: true, type: "text", placeholder: "Email", className: "form-control", defaultValue: this.state.userData.email })
+              _react2.default.createElement("input", { disabled: myState, type: "text", placeholder: "Email", className: "form-control", defaultValue: this.state.userData.email })
             )
           ),
           _react2.default.createElement(
@@ -1085,7 +1086,7 @@ var Layout = function (_React$Component) {
             _react2.default.createElement(
               "div",
               { className: "col-sm-6" },
-              _react2.default.createElement("input", { readOnly: true, type: "text", placeholder: "Birth Day", className: "form-control", defaultValue: this.state.userData.birthDate })
+              _react2.default.createElement("input", { disabled: myState, type: "text", placeholder: "Birth Day", className: "form-control", defaultValue: this.state.userData.birthDate })
             )
           ),
           _react2.default.createElement(
@@ -1094,7 +1095,7 @@ var Layout = function (_React$Component) {
             _react2.default.createElement(
               "div",
               { className: "col-sm-6" },
-              _react2.default.createElement("input", { readOnly: true, type: "text", placeholder: "country", className: "form-control", defaultValue: this.state.userData.country })
+              _react2.default.createElement("input", { disabled: myState, type: "text", placeholder: "country", className: "form-control", defaultValue: this.state.userData.country })
             )
           ),
           _react2.default.createElement(

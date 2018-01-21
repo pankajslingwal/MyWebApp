@@ -10,6 +10,15 @@ body {
     border-radius: 0.3em;
 }
 
+.form-control {
+    background-color: white;
+}
+
+.form-control[disabled]
+{
+    background-color:orangered;
+}
+
 .form-horizontal .control-label{
     color:white;
 }
@@ -18,9 +27,6 @@ h3,h2
     color:yellow;
 }
 
-.form-control{
-    background-color:#ede7e7;
-}
 
 /**[role="form"] h2 {
     margin-left: 5em;

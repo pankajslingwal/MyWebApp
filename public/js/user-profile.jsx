@@ -26,12 +26,13 @@ class Layout extends React.Component {
 
       if(myState2)
       {
-        //control should b e disable by defaultValue
-        //in this loop we have to make them enabled
         this.setState({button: false});
       }
       else{
 
+//show loading icon when in middle processing state
+//as process done updatea by calling API
+//show thanks message after this
         //take user input and pouplate user data and submitt
         //disbale user input
         this.setState({button: true});
@@ -73,6 +74,7 @@ class Layout extends React.Component {
         buttonText = "Save";
       }
 
+
       if (this.state.requestFailed)
       { 
         return <p>Failed!</p>
@@ -89,25 +91,25 @@ class Layout extends React.Component {
             <h2>Welcome {this.state.userData.firstName}</h2>
             <div className="form-group">
                 <div className="col-sm-6">
-                  <input readOnly type="text" placeholder="First Name" className="form-control" defaultValue={this.state.userData.firstName}></input>
+                  <input disabled={myState} type="text" placeholder="First Name" className="form-control" defaultValue={this.state.userData.firstName}></input>
                  </div>
             </div>
 
             <div className="form-group">
                 <div className="col-sm-6">
-                  <input readOnly type="text" placeholder="Email" className="form-control" defaultValue={this.state.userData.email}></input>
+                  <input disabled={myState} type="text" placeholder="Email" className="form-control" defaultValue={this.state.userData.email}></input>
                 </div>
             </div>
 
             <div className="form-group">
                 <div className="col-sm-6">
-                  <input readOnly type="text" placeholder="Birth Day" className="form-control" defaultValue={this.state.userData.birthDate}></input>
+                  <input disabled={myState} type="text" placeholder="Birth Day" className="form-control" defaultValue={this.state.userData.birthDate}></input>
                 </div>
             </div>
 
             <div className="form-group">
                 <div className="col-sm-6">
-                    <input readOnly type="text" placeholder="country" className="form-control" defaultValue={this.state.userData.country}></input>
+                    <input disabled={myState} type="text" placeholder="country" className="form-control" defaultValue={this.state.userData.country}></input>
                 </div>
              </div>
 
