@@ -6,7 +6,7 @@ import ReactDOM from "react-dom";
 //https://github.com/javascript-playground/remote-data-react-screencasts/blob/master/src/Github.js
 
 const urlForUsername = username => 'http://localhost:3000/getUser'
-//const urlForUsername = username => 'https://api.github.com/users/${username}'
+//const urlForUsername = username => 'http://localhost:3000/getUser/${username}'
 
 
 class Layout extends React.Component {
@@ -14,15 +14,28 @@ class Layout extends React.Component {
     {
         super();
         this.state = {
-          requestFailed: false
+          requestFailed: false,
+          button :true
         }
         this.formName = "User Profile Editable Form !!";
     }
 
     makeFormEditable()
     {
-      console.log("pankaj");
-      return "";
+      const myState2 = this.state.button;
+
+      if(myState2)
+      {
+        //control should b e disable by defaultValue
+        //in this loop we have to make them enabled
+        this.setState({button: false});
+      }
+      else{
+
+        //take user input and pouplate user data and submitt
+        //disbale user input
+        this.setState({button: true});
+      }
     }
 
     componentDidMount() {
@@ -47,6 +60,19 @@ class Layout extends React.Component {
 
     render()
     {
+      const myState = this.state.button;
+
+      var buttonText;
+      var readOnlyText;
+
+      if(myState)
+      {
+        buttonText = "Edit";
+      }
+      else{
+        buttonText = "Save";
+      }
+
       if (this.state.requestFailed)
       { 
         return <p>Failed!</p>
@@ -57,15 +83,42 @@ class Layout extends React.Component {
       }
       
         return (
-           <div>
-             <p>{this.state.userData.firstName}</p>
-            <p>{this.state.userData.email}</p>
-            <p>{this.state.userData.birthDate}</p>
-            <p>{this.state.userData.country}</p>
-            <button onClick={this.makeFormEditable}>Edit Profile</button>
-          </div>     
+          <div className="container">
+          <form className="form-horizontal" role="form">
+
+            <h2>Welcome {this.state.userData.firstName}</h2>
+            <div className="form-group">
+                <div className="col-sm-6">
+                  <input readOnly type="text" placeholder="First Name" className="form-control" defaultValue={this.state.userData.firstName}></input>
+                 </div>
+            </div>
+
+            <div className="form-group">
+                <div className="col-sm-6">
+                  <input readOnly type="text" placeholder="Email" className="form-control" defaultValue={this.state.userData.email}></input>
+                </div>
+            </div>
+
+            <div className="form-group">
+                <div className="col-sm-6">
+                  <input readOnly type="text" placeholder="Birth Day" className="form-control" defaultValue={this.state.userData.birthDate}></input>
+                </div>
+            </div>
+
+            <div className="form-group">
+                <div className="col-sm-6">
+                    <input readOnly type="text" placeholder="country" className="form-control" defaultValue={this.state.userData.country}></input>
+                </div>
+             </div>
+
+             <div className="form-group">
+                <div className="col-sm-2">
+                  <button type="button"  className="btn btn-primary btn-block" onClick={this.makeFormEditable.bind(this)}>{buttonText}</button>
+                </div>
+             </div>
+          </form>   
+      </div>  
         );
-        
     }
 }
 

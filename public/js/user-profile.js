@@ -963,7 +963,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var urlForUsername = function urlForUsername(username) {
   return 'http://localhost:3000/getUser';
 };
-//const urlForUsername = username => 'https://api.github.com/users/${username}'
+//const urlForUsername = username => 'http://localhost:3000/getUser/${username}'
 
 
 var Layout = function (_React$Component) {
@@ -975,7 +975,8 @@ var Layout = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (Layout.__proto__ || Object.getPrototypeOf(Layout)).call(this));
 
     _this.state = {
-      requestFailed: false
+      requestFailed: false,
+      button: true
     };
     _this.formName = "User Profile Editable Form !!";
     return _this;
@@ -984,8 +985,18 @@ var Layout = function (_React$Component) {
   _createClass(Layout, [{
     key: "makeFormEditable",
     value: function makeFormEditable() {
-      console.log("pankaj");
-      return "";
+      var myState2 = this.state.button;
+
+      if (myState2) {
+        //control should b e disable by defaultValue
+        //in this loop we have to make them enabled
+        this.setState({ button: false });
+      } else {
+
+        //take user input and pouplate user data and submitt
+        //disbale user input
+        this.setState({ button: true });
+      }
     }
   }, {
     key: "componentDidMount",
@@ -1012,6 +1023,17 @@ var Layout = function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var myState = this.state.button;
+
+      var buttonText;
+      var readOnlyText;
+
+      if (myState) {
+        buttonText = "Edit";
+      } else {
+        buttonText = "Save";
+      }
+
       if (this.state.requestFailed) {
         return _react2.default.createElement(
           "p",
@@ -1029,31 +1051,65 @@ var Layout = function (_React$Component) {
 
       return _react2.default.createElement(
         "div",
-        null,
+        { className: "container" },
         _react2.default.createElement(
-          "p",
-          null,
-          this.state.userData.firstName
-        ),
-        _react2.default.createElement(
-          "p",
-          null,
-          this.state.userData.email
-        ),
-        _react2.default.createElement(
-          "p",
-          null,
-          this.state.userData.birthDate
-        ),
-        _react2.default.createElement(
-          "p",
-          null,
-          this.state.userData.country
-        ),
-        _react2.default.createElement(
-          "button",
-          { onClick: this.makeFormEditable },
-          "Edit Profile"
+          "form",
+          { className: "form-horizontal", role: "form" },
+          _react2.default.createElement(
+            "h2",
+            null,
+            "Welcome ",
+            this.state.userData.firstName
+          ),
+          _react2.default.createElement(
+            "div",
+            { className: "form-group" },
+            _react2.default.createElement(
+              "div",
+              { className: "col-sm-6" },
+              _react2.default.createElement("input", { readOnly: true, type: "text", placeholder: "First Name", className: "form-control", defaultValue: this.state.userData.firstName })
+            )
+          ),
+          _react2.default.createElement(
+            "div",
+            { className: "form-group" },
+            _react2.default.createElement(
+              "div",
+              { className: "col-sm-6" },
+              _react2.default.createElement("input", { readOnly: true, type: "text", placeholder: "Email", className: "form-control", defaultValue: this.state.userData.email })
+            )
+          ),
+          _react2.default.createElement(
+            "div",
+            { className: "form-group" },
+            _react2.default.createElement(
+              "div",
+              { className: "col-sm-6" },
+              _react2.default.createElement("input", { readOnly: true, type: "text", placeholder: "Birth Day", className: "form-control", defaultValue: this.state.userData.birthDate })
+            )
+          ),
+          _react2.default.createElement(
+            "div",
+            { className: "form-group" },
+            _react2.default.createElement(
+              "div",
+              { className: "col-sm-6" },
+              _react2.default.createElement("input", { readOnly: true, type: "text", placeholder: "country", className: "form-control", defaultValue: this.state.userData.country })
+            )
+          ),
+          _react2.default.createElement(
+            "div",
+            { className: "form-group" },
+            _react2.default.createElement(
+              "div",
+              { className: "col-sm-2" },
+              _react2.default.createElement(
+                "button",
+                { type: "button", className: "btn btn-primary btn-block", onClick: this.makeFormEditable.bind(this) },
+                buttonText
+              )
+            )
+          )
         )
       );
     }
