@@ -19,6 +19,12 @@ class Layout extends React.Component {
         this.formName = "User Profile Editable Form !!";
     }
 
+    makeFormEditable()
+    {
+      console.log("pankaj");
+      return "";
+    }
+
     componentDidMount() {
     fetch(urlForUsername(this.props.username))
       .then(response => {
@@ -56,6 +62,7 @@ class Layout extends React.Component {
             <p>{this.state.userData.email}</p>
             <p>{this.state.userData.birthDate}</p>
             <p>{this.state.userData.country}</p>
+            <button onClick={this.makeFormEditable}>Edit Profile</button>
           </div>     
         );
         

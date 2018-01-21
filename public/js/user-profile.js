@@ -982,6 +982,12 @@ var Layout = function (_React$Component) {
   }
 
   _createClass(Layout, [{
+    key: "makeFormEditable",
+    value: function makeFormEditable() {
+      console.log("pankaj");
+      return "";
+    }
+  }, {
     key: "componentDidMount",
     value: function componentDidMount() {
       var _this2 = this;
@@ -1043,6 +1049,11 @@ var Layout = function (_React$Component) {
           "p",
           null,
           this.state.userData.country
+        ),
+        _react2.default.createElement(
+          "button",
+          { onClick: this.makeFormEditable },
+          "Edit Profile"
         )
       );
     }
