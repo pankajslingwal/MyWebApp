@@ -16,7 +16,7 @@ body {
 
 .form-control[disabled]
 {
-    background-color:orangered;
+    background-color:#efa990;
 }
 
 .form-horizontal .control-label{
