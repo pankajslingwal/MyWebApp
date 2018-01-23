@@ -69,6 +69,39 @@ router.get('/getUser', function (req, res, next) {
     });
 });
 
+router.get('/updateUser', function (req, res, next) {
+
+    bucketLogin.query(query, function(err, rows, meta) {
+        
+        //console.log(rows[0].MyNodeJSLogin);
+        // console.log(rows[0].MyNodeJSLogin.email);
+        // console.log(rows[0].email);
+
+        if(err) 
+           {
+                var respJSON = {
+                    code: err.code,
+                    data:null
+                } 
+               
+                res.send(respJSON); 
+           }
+           else
+           {
+               var respJSON = {
+                    code: 200,
+                    data : JSON.stringify(rows[0].MyNodeJSLogin)
+                }
+               res.send(respJSON); 
+           }  
+        
+        // for (row in rows) {
+        //     console.log(row.MyNodeJSLogin);
+        //         //console.log('Name: %s. Email: %s', myrow.email, myrow.firstName);
+        // }
+    });
+});
+
 router.post('/createUser', function (req, res, next) {
 
     
