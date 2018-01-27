@@ -18,6 +18,7 @@ class Layout extends React.Component {
           dateOfBirth : '',
           countryofRedsidence : ''
         };
+
         this.handleChangeName = this.handleChangeName.bind(this);
         this.handleChangeBirthday = this.handleChangeBirthday.bind(this);
         this.handleChangeCOuntry = this.handleChangeCOuntry.bind(this);
@@ -83,7 +84,7 @@ class Layout extends React.Component {
           contentType: "application/json",
           data: JSON.stringify({ 
               name : this.state.name,            
-              email: this.state.emailId,
+              email: this.state.username,
               dob : this.state.dateOfBirth,
               country : this.state.countryofRedsidence
           }),

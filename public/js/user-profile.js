@@ -979,6 +979,7 @@ var Layout = function (_React$Component) {
       dateOfBirth: '',
       countryofRedsidence: ''
     };
+
     _this.handleChangeName = _this.handleChangeName.bind(_this);
     _this.handleChangeBirthday = _this.handleChangeBirthday.bind(_this);
     _this.handleChangeCOuntry = _this.handleChangeCOuntry.bind(_this);
@@ -1049,7 +1050,7 @@ var Layout = function (_React$Component) {
           contentType: "application/json",
           data: JSON.stringify({
             name: this.state.name,
-            email: this.state.emailId,
+            email: this.state.username,
             dob: this.state.dateOfBirth,
             country: this.state.countryofRedsidence
           }),
