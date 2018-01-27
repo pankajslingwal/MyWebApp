@@ -19,7 +19,6 @@ class Layout extends React.Component {
           countryofRedsidence : ''
         };
         this.handleChangeName = this.handleChangeName.bind(this);
-        this.handleChangeEmail = this.handleChangeEmail.bind(this);
         this.handleChangeBirthday = this.handleChangeBirthday.bind(this);
         this.handleChangeCOuntry = this.handleChangeCOuntry.bind(this);
         this.formName = "User Profile Editable Form !!";
@@ -84,7 +83,9 @@ class Layout extends React.Component {
           contentType: "application/json",
           data: JSON.stringify({ 
               name : this.state.name,            
-              email: this.state.userData.email
+              email: this.state.emailId,
+              dob : this.state.dateOfBirth,
+              country : this.state.countryofRedsidence
           }),
           success: function(data) {
             this.setState({processing: false});
@@ -144,7 +145,7 @@ class Layout extends React.Component {
 
             <div className="form-group">
                 <div className="col-sm-6">
-                  <input value={this.state.emailId} onChange={this.handleChangeEmail} value={this.state.emailId} disabled={myState} type="text" placeholder="Email" className="form-control" ></input>
+                  <input value={this.state.emailId} disabled='true' type="text" placeholder="Email" className="form-control" ></input>
                 </div>
             </div>
 

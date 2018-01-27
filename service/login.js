@@ -59,6 +59,10 @@ router.post('/updateUser', function (req, res, next) {
            }
            else
            {
+               req.body.email
+               req.body.dob
+               req.body.country
+               //don't accept email from client side....just use meial for indetifying record in above query 
                bucketLogin.upsert(rows[0].id, '{}',
                 function (err, result) {
                     if(err)

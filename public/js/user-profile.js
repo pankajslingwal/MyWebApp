@@ -952,8 +952,6 @@ var _reactDom2 = _interopRequireDefault(_reactDom);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -982,7 +980,6 @@ var Layout = function (_React$Component) {
       countryofRedsidence: ''
     };
     _this.handleChangeName = _this.handleChangeName.bind(_this);
-    _this.handleChangeEmail = _this.handleChangeEmail.bind(_this);
     _this.handleChangeBirthday = _this.handleChangeBirthday.bind(_this);
     _this.handleChangeCOuntry = _this.handleChangeCOuntry.bind(_this);
     _this.formName = "User Profile Editable Form !!";
@@ -1052,7 +1049,9 @@ var Layout = function (_React$Component) {
           contentType: "application/json",
           data: JSON.stringify({
             name: this.state.name,
-            email: this.state.userData.email
+            email: this.state.emailId,
+            dob: this.state.dateOfBirth,
+            country: this.state.countryofRedsidence
           }),
           success: function (data) {
             this.setState({ processing: false });
@@ -1067,8 +1066,6 @@ var Layout = function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _React$createElement;
-
       var myState = this.state.button;
 
       var buttonText;
@@ -1129,7 +1126,7 @@ var Layout = function (_React$Component) {
             _react2.default.createElement(
               "div",
               { className: "col-sm-6" },
-              _react2.default.createElement("input", (_React$createElement = { value: this.state.emailId, onChange: this.handleChangeEmail }, _defineProperty(_React$createElement, "value", this.state.emailId), _defineProperty(_React$createElement, "disabled", myState), _defineProperty(_React$createElement, "type", "text"), _defineProperty(_React$createElement, "placeholder", "Email"), _defineProperty(_React$createElement, "className", "form-control"), _React$createElement))
+              _react2.default.createElement("input", { value: this.state.emailId, disabled: "true", type: "text", placeholder: "Email", className: "form-control" })
             )
           ),
           _react2.default.createElement(
