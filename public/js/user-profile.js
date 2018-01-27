@@ -952,6 +952,8 @@ var _reactDom2 = _interopRequireDefault(_reactDom);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -973,8 +975,16 @@ var Layout = function (_React$Component) {
       requestFailed: false,
       button: true,
       processing: false,
-      username: $('#h_v').val()
+      username: $('#h_v').val(),
+      name: '',
+      emailId: '',
+      dateOfBirth: '',
+      countryofRedsidence: ''
     };
+    _this.handleChangeName = _this.handleChangeName.bind(_this);
+    _this.handleChangeEmail = _this.handleChangeEmail.bind(_this);
+    _this.handleChangeBirthday = _this.handleChangeBirthday.bind(_this);
+    _this.handleChangeCOuntry = _this.handleChangeCOuntry.bind(_this);
     _this.formName = "User Profile Editable Form !!";
     return _this;
   }
@@ -993,13 +1003,37 @@ var Layout = function (_React$Component) {
         return d.json();
       }).then(function (d) {
         _this2.setState({
-          userData: JSON.parse(d.data)
+          name: JSON.parse(d.data).firstName,
+          emailId: JSON.parse(d.data).email,
+          dateOfBirth: JSON.parse(d.data).birthDate,
+          countryofRedsidence: JSON.parse(d.data).country
+
         });
       }, function () {
         _this2.setState({
           requestFailed: true
         });
       });
+    }
+  }, {
+    key: "handleChangeName",
+    value: function handleChangeName(event) {
+      this.setState({ name: event.target.value.toUpperCase() });
+    }
+  }, {
+    key: "handleChangeEmail",
+    value: function handleChangeEmail(event) {
+      this.setState({ emailId: event.target.value.toUpperCase() });
+    }
+  }, {
+    key: "handleChangeBirthday",
+    value: function handleChangeBirthday(event) {
+      this.setState({ dateOfBirth: event.target.value.toUpperCase() });
+    }
+  }, {
+    key: "handleChangeCOuntry",
+    value: function handleChangeCOuntry(event) {
+      this.setState({ countryofRedsidence: event.target.value.toUpperCase() });
     }
   }, {
     key: "makeFormEditable",
@@ -1017,6 +1051,7 @@ var Layout = function (_React$Component) {
           type: 'POST',
           contentType: "application/json",
           data: JSON.stringify({
+            name: this.state.name,
             email: this.state.userData.email
           }),
           success: function (data) {
@@ -1032,6 +1067,8 @@ var Layout = function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var _React$createElement;
+
       var myState = this.state.button;
 
       var buttonText;
@@ -1050,7 +1087,7 @@ var Layout = function (_React$Component) {
           "Failed!"
         );
       }
-      if (!this.state.userData) {
+      if (!this.state.name) {
         return _react2.default.createElement(
           "p",
           null,
@@ -1075,7 +1112,7 @@ var Layout = function (_React$Component) {
             "h2",
             null,
             "Welcome ",
-            this.state.userData.firstName
+            this.state.name
           ),
           _react2.default.createElement(
             "div",
@@ -1083,7 +1120,7 @@ var Layout = function (_React$Component) {
             _react2.default.createElement(
               "div",
               { className: "col-sm-6" },
-              _react2.default.createElement("input", { disabled: myState, type: "text", placeholder: "First Name", className: "form-control", defaultValue: this.state.userData.firstName })
+              _react2.default.createElement("input", { value: this.state.name, onChange: this.handleChangeName, disabled: myState, type: "text", placeholder: "First Name", className: "form-control" })
             )
           ),
           _react2.default.createElement(
@@ -1092,7 +1129,7 @@ var Layout = function (_React$Component) {
             _react2.default.createElement(
               "div",
               { className: "col-sm-6" },
-              _react2.default.createElement("input", { disabled: myState, type: "text", placeholder: "Email", className: "form-control", defaultValue: this.state.userData.email })
+              _react2.default.createElement("input", (_React$createElement = { value: this.state.emailId, onChange: this.handleChangeEmail }, _defineProperty(_React$createElement, "value", this.state.emailId), _defineProperty(_React$createElement, "disabled", myState), _defineProperty(_React$createElement, "type", "text"), _defineProperty(_React$createElement, "placeholder", "Email"), _defineProperty(_React$createElement, "className", "form-control"), _React$createElement))
             )
           ),
           _react2.default.createElement(
@@ -1101,7 +1138,7 @@ var Layout = function (_React$Component) {
             _react2.default.createElement(
               "div",
               { className: "col-sm-6" },
-              _react2.default.createElement("input", { disabled: myState, type: "text", placeholder: "Birth Day", className: "form-control", defaultValue: this.state.userData.birthDate })
+              _react2.default.createElement("input", { value: this.state.dateOfBirth, onChange: this.handleChangeBirthday, disabled: myState, type: "text", placeholder: "Birth Day", className: "form-control" })
             )
           ),
           _react2.default.createElement(
@@ -1110,7 +1147,7 @@ var Layout = function (_React$Component) {
             _react2.default.createElement(
               "div",
               { className: "col-sm-6" },
-              _react2.default.createElement("input", { disabled: myState, type: "text", placeholder: "country", className: "form-control", defaultValue: this.state.userData.country })
+              _react2.default.createElement("input", { value: this.state.countryofRedsidence, onChange: this.handleChangeCOuntry, disabled: myState, type: "text", placeholder: "country", className: "form-control" })
             )
           ),
           _react2.default.createElement(

@@ -59,7 +59,6 @@ router.post('/updateUser', function (req, res, next) {
            }
            else
            {
-               console.log(rows);
                bucketLogin.upsert(rows[0].id, '{}',
                 function (err, result) {
                     if(err)

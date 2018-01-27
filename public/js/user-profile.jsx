@@ -12,8 +12,16 @@ class Layout extends React.Component {
           requestFailed: false,
           button :true,
           processing : false,
-          username : $('#h_v').val()
-        }
+          username : $('#h_v').val(),
+          name : '',
+          emailId : '',
+          dateOfBirth : '',
+          countryofRedsidence : ''
+        };
+        this.handleChangeName = this.handleChangeName.bind(this);
+        this.handleChangeEmail = this.handleChangeEmail.bind(this);
+        this.handleChangeBirthday = this.handleChangeBirthday.bind(this);
+        this.handleChangeCOuntry = this.handleChangeCOuntry.bind(this);
         this.formName = "User Profile Editable Form !!";
     }
 
@@ -29,13 +37,33 @@ class Layout extends React.Component {
       .then(d=> d.json())
       .then(d => {
         this.setState({
-          userData: JSON.parse(d.data)
+          name : JSON.parse(d.data).firstName,
+          emailId : JSON.parse(d.data).email,
+          dateOfBirth : JSON.parse(d.data).birthDate,
+          countryofRedsidence : JSON.parse(d.data).country
+          
         })
       }, () => {
         this.setState({ 
           requestFailed: true
         })
       })
+    }
+
+    handleChangeName(event) {
+      this.setState({name: event.target.value.toUpperCase()});
+    }
+
+    handleChangeEmail(event) {
+      this.setState({emailId: event.target.value.toUpperCase()});
+    }
+
+    handleChangeBirthday(event) {
+      this.setState({dateOfBirth: event.target.value.toUpperCase()});
+    }
+
+    handleChangeCOuntry(event) {
+      this.setState({countryofRedsidence: event.target.value.toUpperCase()});
     }
 
      makeFormEditable() 
@@ -55,6 +83,7 @@ class Layout extends React.Component {
           type: 'POST',
           contentType: "application/json",
           data: JSON.stringify({ 
+              name : this.state.name,            
               email: this.state.userData.email
           }),
           success: function(data) {
@@ -91,7 +120,7 @@ class Layout extends React.Component {
       { 
         return <p>Failed!</p>
       }
-      if (!this.state.userData)
+      if (!this.state.name)
       { 
          return <p>Loading...</p>
       }
@@ -100,32 +129,34 @@ class Layout extends React.Component {
          return <p>Processing...</p>
       }
       
+      
         return (
+          
           <div className="container">
           <form className="form-horizontal" role="form">
-
-            <h2>Welcome {this.state.userData.firstName}</h2>
+          
+            <h2>Welcome {this.state.name}</h2>
             <div className="form-group">
                 <div className="col-sm-6">
-                  <input disabled={myState} type="text" placeholder="First Name" className="form-control" defaultValue={this.state.userData.firstName}></input>
+                  <input value={this.state.name} onChange={this.handleChangeName} disabled={myState} type="text" placeholder="First Name" className="form-control"></input>
                  </div>
             </div>
 
             <div className="form-group">
                 <div className="col-sm-6">
-                  <input disabled={myState} type="text" placeholder="Email" className="form-control" defaultValue={this.state.userData.email}></input>
+                  <input value={this.state.emailId} onChange={this.handleChangeEmail} value={this.state.emailId} disabled={myState} type="text" placeholder="Email" className="form-control" ></input>
                 </div>
             </div>
 
             <div className="form-group">
                 <div className="col-sm-6">
-                  <input disabled={myState} type="text" placeholder="Birth Day" className="form-control" defaultValue={this.state.userData.birthDate}></input>
+                  <input value={this.state.dateOfBirth}  onChange={this.handleChangeBirthday} disabled={myState} type="text" placeholder="Birth Day" className="form-control" ></input>
                 </div>
             </div>
 
             <div className="form-group">
                 <div className="col-sm-6">
-                    <input disabled={myState} type="text" placeholder="country" className="form-control" defaultValue={this.state.userData.country}></input>
+                    <input value={this.state.countryofRedsidence} onChange={this.handleChangeCOuntry} disabled={myState} type="text" placeholder="country" className="form-control" ></input>
                 </div>
              </div>
 
