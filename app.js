@@ -42,7 +42,7 @@ router.get('/user-profile', function (req, res, next) {
   sess=req.session;
   if(sess.loggedIn != undefined && sess.loggenInMember!= undefined)
   {
-    res.render('user-profile', { pagetitle: 'User Prfile', heading: 'User Profile' });
+    res.render('user-profile', { pagetitle: 'User Prfile', heading: 'User Profile', username : sess.loggenInMember.email });
   }
   else{
     res.redirect('/login')

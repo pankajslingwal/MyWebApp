@@ -1,13 +1,8 @@
 //https://www.youtube.com/watch?v=vu_rIMPROoQ
-
 import React from "react";
 import ReactDOM from "react-dom";
 
-//https://github.com/javascript-playground/remote-data-react-screencasts/blob/master/src/Github.js
-
-const urlForUsername = username => 'http://localhost:3000/getUser'
-//const urlForUsername = username => 'http://localhost:3000/getUser/${username}'
-
+const urlForUsername = 'http://localhost:3000/getUser/'
 
 class Layout extends React.Component {
     constructor()
@@ -15,32 +10,16 @@ class Layout extends React.Component {
         super();
         this.state = {
           requestFailed: false,
-          button :true
+          button :true,
+          processing : false,
+          username : $('#h_v').val()
         }
         this.formName = "User Profile Editable Form !!";
     }
 
-    makeFormEditable()
-    {
-      const myState2 = this.state.button;
-
-      if(myState2)
-      {
-        this.setState({button: false});
-      }
-      else{
-
-//show loading icon when in middle processing state
-//as process done updatea by calling API
-//show thanks message after this
-        //take user input and pouplate user data and submitt
-        //disbale user input
-        this.setState({button: true});
-      }
-    }
-
+   
     componentDidMount() {
-    fetch(urlForUsername(this.props.username))
+    fetch(urlForUsername + this.state.username)
       .then(response => {
         if (!response.ok) {
           throw Error("Network request failed")
@@ -58,6 +37,39 @@ class Layout extends React.Component {
         })
       })
     }
+
+     makeFormEditable() 
+    {
+      const myState2 = this.state.button;
+
+      if(myState2)
+      { 
+        this.setState({button: false});
+      }
+      else{
+        
+        this.setState({processing: true});
+         
+        $.ajax({
+          url: 'http://localhost:3000/updateUser',
+          type: 'POST',
+          contentType: "application/json",
+          data: JSON.stringify({ 
+              email: this.state.userData.email
+          }),
+          success: function(data) {
+            this.setState({processing: false});
+            this.setState({button: true});
+          }.bind(this),
+          error: function(xhr, status, err) {
+            console.log(this.props.url, status, err.toString());
+          }.bind(this)
+        });
+        
+        
+      }
+    }
+
 
     render()
     {
@@ -82,6 +94,10 @@ class Layout extends React.Component {
       if (!this.state.userData)
       { 
          return <p>Loading...</p>
+      }
+      if (this.state.processing)
+      { 
+         return <p>Processing...</p>
       }
       
         return (

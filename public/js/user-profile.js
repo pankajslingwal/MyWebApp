@@ -958,13 +958,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } //https://www.youtube.com/watch?v=vu_rIMPROoQ
 
-//https://github.com/javascript-playground/remote-data-react-screencasts/blob/master/src/Github.js
 
-var urlForUsername = function urlForUsername(username) {
-  return 'http://localhost:3000/getUser';
-};
-//const urlForUsername = username => 'http://localhost:3000/getUser/${username}'
-
+var urlForUsername = 'http://localhost:3000/getUser/';
 
 var Layout = function (_React$Component) {
   _inherits(Layout, _React$Component);
@@ -976,35 +971,20 @@ var Layout = function (_React$Component) {
 
     _this.state = {
       requestFailed: false,
-      button: true
+      button: true,
+      processing: false,
+      username: $('#h_v').val()
     };
     _this.formName = "User Profile Editable Form !!";
     return _this;
   }
 
   _createClass(Layout, [{
-    key: "makeFormEditable",
-    value: function makeFormEditable() {
-      var myState2 = this.state.button;
-
-      if (myState2) {
-        this.setState({ button: false });
-      } else {
-
-        //show loading icon when in middle processing state
-        //as process done updatea by calling API
-        //show thanks message after this
-        //take user input and pouplate user data and submitt
-        //disbale user input
-        this.setState({ button: true });
-      }
-    }
-  }, {
     key: "componentDidMount",
     value: function componentDidMount() {
       var _this2 = this;
 
-      fetch(urlForUsername(this.props.username)).then(function (response) {
+      fetch(urlForUsername + this.state.username).then(function (response) {
         if (!response.ok) {
           throw Error("Network request failed");
         }
@@ -1020,6 +1000,34 @@ var Layout = function (_React$Component) {
           requestFailed: true
         });
       });
+    }
+  }, {
+    key: "makeFormEditable",
+    value: function makeFormEditable() {
+      var myState2 = this.state.button;
+
+      if (myState2) {
+        this.setState({ button: false });
+      } else {
+
+        this.setState({ processing: true });
+
+        $.ajax({
+          url: 'http://localhost:3000/updateUser',
+          type: 'POST',
+          contentType: "application/json",
+          data: JSON.stringify({
+            email: this.state.userData.email
+          }),
+          success: function (data) {
+            this.setState({ processing: false });
+            this.setState({ button: true });
+          }.bind(this),
+          error: function (xhr, status, err) {
+            console.log(this.props.url, status, err.toString());
+          }.bind(this)
+        });
+      }
     }
   }, {
     key: "render",
@@ -1047,6 +1055,13 @@ var Layout = function (_React$Component) {
           "p",
           null,
           "Loading..."
+        );
+      }
+      if (this.state.processing) {
+        return _react2.default.createElement(
+          "p",
+          null,
+          "Processing..."
         );
       }
 

@@ -12,7 +12,6 @@ var bucket = cluster.openBucket('MyNodeJS','Sapient201@');
 
 router.get('/validate', function (req, res, next) {
     var email = req.headers.email;    
-    
     bucket.get(email, function (err, result) {
            if(err)
            {
