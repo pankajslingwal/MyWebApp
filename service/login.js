@@ -5,6 +5,9 @@ var cluster = new couchbase.Cluster('http://localhost:8091/');
 var bucketLogin = cluster.openBucket('MyNodeJSLogin','Sapient201@'); 
 const uuidv1 = require('uuid/v1');
 var N1qlQuery = couchbase.N1qlQuery;
+var jsonWebToken = require('jsonwebtoken');
+var bcrypt = require('bcrypt');
+
 
 var myQuery = 'Select * from MyNodeJSLogin where email=$1';
 var checkExistingUserQuery = 'Select  META().id, email from MyNodeJSLogin where email=$1';
@@ -92,6 +95,32 @@ router.post('/updateUser', function (req, res, next) {
 });
 
 router.post('/createUser', function (req, res, next) {
+    bucketLogin.insert(uuidv1().toString(), req.body,
+    function (err, result) {
+        if(err)
+        {
+            var respJSON = {
+                code: err.code,
+                data:null
+            }
+            res.send(respJSON);
+        }
+        else
+        {
+            var respJSON = {
+                        code: 200,
+                        data : null
+                    }
+
+            res.send(respJSON); 
+        }
+    });
+
+    
+});
+
+
+router.post('/loginUser', function (req, res, next) {
     bucketLogin.insert(uuidv1().toString(), req.body,
     function (err, result) {
         if(err)

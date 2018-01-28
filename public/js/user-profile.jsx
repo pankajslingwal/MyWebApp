@@ -1,4 +1,10 @@
 //https://www.youtube.com/watch?v=vu_rIMPROoQ
+//https://scotch.io/tutorials/authenticate-a-node-js-api-with-json-web-tokens
+//https://hackernoon.com/your-node-js-authentication-tutorial-is-wrong-f1a3bf831a46
+//https://medium.freecodecamp.org/securing-node-js-restful-apis-with-json-web-tokens-9f811a92bb52
+//https://www.codementor.io/olatundegaruba/5-steps-to-authenticating-node-js-with-jwt-7ahb5dmyr
+
+
 import React from "react";
 import ReactDOM from "react-dom";
 
