@@ -7,6 +7,8 @@ var BODYPARSER = require("body-parser");
 var COOKIEPARSER = require("cookie-parser");
 const passport = require('passport');
 var http = require('http');
+var formidable = require('formidable');
+var enCryptPass = require('bcrypt');
 
 
 // Instance
@@ -75,6 +77,8 @@ router.post('/success', function (req, res, next) {
     }
     else
     { 
+        var User;
+        
         var options = { 
           host: 'localhost',
           port: 3000,
@@ -84,6 +88,21 @@ router.post('/success', function (req, res, next) {
               'Content-Type': 'application/json'
               }
           };
+
+          
+
+          var form = new formidable.IncomingForm();
+          form.parse(req, function(err, fields, files) {
+            var subscribedUserData = sess.validatedUser;
+
+            User =  {
+              firstName : subscribedUserData.firstName,
+              email : subscribedUserData.email,
+              country : subscribedUserData.country,
+              password : enCryptPass.hashSync(fields.password, 10),
+              birthDate : subscribedUserData.birthDate
+            }
+          });
 
           var req = http.request(options, function(res1) {
         
@@ -117,7 +136,11 @@ router.post('/success', function (req, res, next) {
               return res.redirect('/error'); 
           });
 
-          req.write(JSON.stringify(sess.validatedUser));
+          console.log(User);
+          console.log('Next');
+          console.log(JSON.stringify(User));
+
+          req.write(JSON.stringify(User));
           req.end();
         //based on response throw error if user already exist, email id is primary key and password
         //sess.validatedUser
