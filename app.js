@@ -1,4 +1,3 @@
-// Declaration
 const EXPRESS = require('express');
 const EXPHBS  = require('express-handlebars');
 const path = require('path');
@@ -11,7 +10,6 @@ var formidable = require('formidable');
 var enCryptPass = require('bcrypt');
 
 
-// Instance
 var myapp = new EXPRESS();  
 var router = EXPRESS.Router(); 
 var sess;
@@ -49,7 +47,7 @@ router.get('/user-profile', function (req, res, next) {
   else{
     res.redirect('/login')
   }
-  //res.render('user-profile', { pagetitle: 'User Prfile', heading: 'User Profile' });
+  
 }); 
 
 router.get('/login', function (req, res, next) {
@@ -77,8 +75,8 @@ router.post('/success', function (req, res, next) {
     }
     else
     { 
-        var User;
-        
+
+
         var options = { 
           host: 'localhost',
           port: 3000,
@@ -90,19 +88,22 @@ router.post('/success', function (req, res, next) {
           };
 
           
+            var form = new formidable.IncomingForm();
+            form.parse(req, function(err, fields, files) {
+              var subscribedUserData = sess.validatedUser;
 
-          var form = new formidable.IncomingForm();
-          form.parse(req, function(err, fields, files) {
-            var subscribedUserData = sess.validatedUser;
+              var User =  {
+                firstName : subscribedUserData.firstName,
+                email : subscribedUserData.email,
+                country : subscribedUserData.country,
+                password : enCryptPass.hashSync(fields.password, 10),
+                birthDate : subscribedUserData.birthDate
+              }
 
-            User =  {
-              firstName : subscribedUserData.firstName,
-              email : subscribedUserData.email,
-              country : subscribedUserData.country,
-              password : enCryptPass.hashSync(fields.password, 10),
-              birthDate : subscribedUserData.birthDate
-            }
-          });
+              return User;
+              
+            });
+          
 
           var req = http.request(options, function(res1) {
         
@@ -136,17 +137,9 @@ router.post('/success', function (req, res, next) {
               return res.redirect('/error'); 
           });
 
-          console.log(User);
-          console.log('Next');
-          console.log(JSON.stringify(User));
-
           req.write(JSON.stringify(User));
           req.end();
-        //based on response throw error if user already exist, email id is primary key and password
-        //sess.validatedUser
-        //Create entry in new database using passport library
-        ///Thankyou for registering and redirect user to logged in page, MY profile
-        //res.render('success', { pagetitle: 'Success Page', heading: 'Thanks for subscribing to Emails' });
+        
     }
 });
 
