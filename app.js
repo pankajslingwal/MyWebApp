@@ -75,11 +75,12 @@ router.post('/success', function (req, res, next) {
     }
     else
     { 
-          createUserAccount();
+      var gen = createUserAccount(req);
+      gen.next();
     }
 });
 
-function* createUserAccount() {
+function* createUserAccount(req1) {
     var options = { 
             host: 'localhost',
             port: 3000,
@@ -91,7 +92,8 @@ function* createUserAccount() {
             };
 
             var form = new formidable.IncomingForm();
-            yield form.parse(req, function(err, fields, files) {
+            console.log(form);
+            yield form.parse(req1, function(err, fields, files) {
               var subscribedUserData = sess.validatedUser;
 
               var User =  {
