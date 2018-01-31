@@ -75,21 +75,23 @@ router.post('/success', function (req, res, next) {
     }
     else
     { 
+          createUserAccount();
+    }
+});
 
+function* createUserAccount() {
+    var options = { 
+            host: 'localhost',
+            port: 3000,
+            path: '/createUser', 
+            method: 'POST', 
+            headers: { 
+                'Content-Type': 'application/json'
+                }
+            };
 
-        var options = { 
-          host: 'localhost',
-          port: 3000,
-          path: '/createUser', 
-          method: 'POST', 
-          headers: { 
-              'Content-Type': 'application/json'
-              }
-          };
-
-          
             var form = new formidable.IncomingForm();
-            form.parse(req, function(err, fields, files) {
+            yield form.parse(req, function(err, fields, files) {
               var subscribedUserData = sess.validatedUser;
 
               var User =  {
@@ -99,38 +101,30 @@ router.post('/success', function (req, res, next) {
                 password : enCryptPass.hashSync(fields.password, 10),
                 birthDate : subscribedUserData.birthDate
               }
-
               return User;
-              
             });
-          
 
           var req = http.request(options, function(res1) {
-        
-          res1.setEncoding('utf8');
-          res1.on('data', function (body) {
-
-            var createResponse = JSON.parse(body);
-
-            if(createResponse.code == 200)
-            {
-                //sess.validatedUser = fields;
-                sess.loggedIn = true;
-                sess.loggenInMember = sess.validatedUser;
-                return res.redirect('/user-profile');
-            }
-            
-            if(createResponse.code == 12)
-            {
-                return res.redirect('/entryalreadyexist'); 
-            }
-            else
-            {
-                //console.log(createResponse);
-                return res.redirect('/genericmessage');
-            }
-            
-          });
+            res1.setEncoding('utf8');
+            res1.on('data', function (body) {
+                var createResponse = JSON.parse(body);
+                if(createResponse.code == 200)
+                {
+                    //sess.validatedUser = fields;
+                    sess.loggedIn = true;
+                    sess.loggenInMember = sess.validatedUser;
+                    return res.redirect('/user-profile');
+                }
+                
+                if(createResponse.code == 12)
+                {
+                    return res.redirect('/entryalreadyexist'); 
+                }
+                else
+                {
+                    return res.redirect('/genericmessage');
+                }
+            });
           }); 
 
           req.on('error', function(e) {
@@ -139,15 +133,10 @@ router.post('/success', function (req, res, next) {
 
           req.write(JSON.stringify(User));
           req.end();
-        
-    }
-});
+}
 
 var enrollRouter = require("./controller/enroll.js");
-//var loginRouter = require("./controller/login.js");
 
 myapp.use('/', router)
 myapp.use('/enroll', enrollRouter)
-//myapp.use('/login', loginRouter)
-
 myapp.listen(80);
