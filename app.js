@@ -14,7 +14,6 @@ var myapp = new EXPRESS();
 var router = EXPRESS.Router(); 
 var sess;
 
-//Adding module to application
 myapp.use(EXPRESS.static(path.join(__dirname, 'public')));
 myapp.use(COOKIEPARSER());
 //myapp.use(BODYPARSER.urlencoded({ extended: true }));
@@ -31,7 +30,6 @@ var hbs = EXPHBS.create({
 myapp.engine('handlebars', hbs.engine);
 myapp.set('view engine', 'handlebars'); 
 
-//Routing 
 router.get('/', function (req, res, next) {
   sess=req.session;
   sess.validatedUser = undefined;
@@ -77,10 +75,11 @@ router.post('/success', function (req, res, next) {
     { 
       var gen = createUserAccount(req);
       gen.next();
+      gen.next();
     }
 });
 
-function* createUserAccount(req1) {
+function *createUserAccount(req1) {
     var options = { 
             host: 'localhost',
             port: 3000,
@@ -93,17 +92,17 @@ function* createUserAccount(req1) {
 
             var form = new formidable.IncomingForm();
             console.log(form);
+
+            var User;
             yield form.parse(req1, function(err, fields, files) {
               var subscribedUserData = sess.validatedUser;
-
-              var User =  {
+              User =  {
                 firstName : subscribedUserData.firstName,
                 email : subscribedUserData.email,
                 country : subscribedUserData.country,
                 password : enCryptPass.hashSync(fields.password, 10),
                 birthDate : subscribedUserData.birthDate
               }
-              return User;
             });
 
           var req = http.request(options, function(res1) {
