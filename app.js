@@ -14,6 +14,7 @@ var myapp = new EXPRESS();
 var router = EXPRESS.Router(); 
 var sess;
 
+//Adding module to application
 myapp.use(EXPRESS.static(path.join(__dirname, 'public')));
 myapp.use(COOKIEPARSER());
 //myapp.use(BODYPARSER.urlencoded({ extended: true }));
@@ -30,6 +31,7 @@ var hbs = EXPHBS.create({
 myapp.engine('handlebars', hbs.engine);
 myapp.set('view engine', 'handlebars'); 
 
+//Routing 
 router.get('/', function (req, res, next) {
   sess=req.session;
   sess.validatedUser = undefined;
@@ -49,8 +51,17 @@ router.get('/user-profile', function (req, res, next) {
 }); 
 
 router.get('/login', function (req, res, next) {
-  
+    sess=req.session;  
   res.render('login', { pagetitle: 'LogIn', heading: 'LogIN' }); 
+  
+});
+
+router.post('/login', function (req, res, next) {
+    sess=req.session;
+     sess=req.session;
+    var form = new formidable.IncomingForm();
+    form.parse(req, function(err, fields, files) {
+    });
   
 });
 
@@ -65,6 +76,8 @@ router.get('/success', function (req, res, next) {
     res.render('success', { pagetitle: 'Success Page', heading: 'Thanks for subscribing to Emails' });
 });
 
+
+
 router.post('/success', function (req, res, next) {
     sess=req.session;
     if(sess.validatedUser == undefined)
@@ -73,13 +86,12 @@ router.post('/success', function (req, res, next) {
     }
     else
     { 
-      var gen = createUserAccount(req);
-      gen.next();
-      gen.next();
+      createUserAccount(req, res);
     }
 });
 
-function *createUserAccount(req1) {
+function createUserAccount(req1, res2) {
+  
     var options = { 
             host: 'localhost',
             port: 3000,
@@ -91,49 +103,46 @@ function *createUserAccount(req1) {
             };
 
             var form = new formidable.IncomingForm();
-            console.log(form);
-
-            var User;
-            yield form.parse(req1, function(err, fields, files) {
+            
+            form.parse(req1, function(err, fields, files) {
               var subscribedUserData = sess.validatedUser;
-              User =  {
+              var User =  {
                 firstName : subscribedUserData.firstName,
                 email : subscribedUserData.email,
                 country : subscribedUserData.country,
                 password : enCryptPass.hashSync(fields.password, 10),
                 birthDate : subscribedUserData.birthDate
               }
-            });
-
+              
           var req = http.request(options, function(res1) {
             res1.setEncoding('utf8');
             res1.on('data', function (body) {
                 var createResponse = JSON.parse(body);
                 if(createResponse.code == 200)
                 {
-                    //sess.validatedUser = fields;
                     sess.loggedIn = true;
                     sess.loggenInMember = sess.validatedUser;
-                    return res.redirect('/user-profile');
+                    return res2.redirect('/user-profile');
                 }
                 
                 if(createResponse.code == 12)
                 {
-                    return res.redirect('/entryalreadyexist'); 
+                    return res2.redirect('/entryalreadyexist'); 
                 }
                 else
                 {
-                    return res.redirect('/genericmessage');
+                    return res2.redirect('/genericmessage');
                 }
             });
           }); 
 
           req.on('error', function(e) {
-              return res.redirect('/error'); 
+              return res2.redirect('/error'); 
           });
-
           req.write(JSON.stringify(User));
           req.end();
+              
+            });            
 }
 
 var enrollRouter = require("./controller/enroll.js");

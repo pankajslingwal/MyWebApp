@@ -66,7 +66,8 @@ router.post('/updateUser', function (req, res, next) {
                    firstName : req.body.name,
                    email : rows[0].email,
                    birthDate : req.body.dob,
-                   country : req.body.country
+                   country : req.body.country,
+                   passowrd : rows[0].password
                    
                }
                
@@ -120,7 +121,7 @@ router.post('/createUser', function (req, res, next) {
 });
 
 
-router.post('/loginUser', function (req, res, next) {
+router.post('/login', function (req, res, next) {
     bucketLogin.insert(uuidv1().toString(), req.body,
     function (err, result) {
         if(err)
