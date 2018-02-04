@@ -122,25 +122,53 @@ router.post('/createUser', function (req, res, next) {
 
 
 router.post('/login', function (req, res, next) {
-    bucketLogin.insert(uuidv1().toString(), req.body,
-    function (err, result) {
+     var params = [];
+    params[0] = req.body.email;
+    bucketLogin.query(query1, params, function(err, rows, meta) {
         if(err)
-        {
-            var respJSON = {
-                code: err.code,
-                data:null
-            }
-            res.send(respJSON);
-        }
-        else
-        {
-            var respJSON = {
-                        code: 200,
-                        data : null
-                    }
+           {
+                var respJSON = {
+                    code: err.code,
+                    data:null
+                } 
+               
+                res.send(respJSON); 
+           }
+           else
+           {
+               //if row count is zero
+               //rows[0] check if there are items in rows
+               // if not then throw error as some error code for showing errror at client side as no user was found.
+                //api response woudl be 401 http
 
-            res.send(respJSON); 
-        }
+               //if user was found compare password
+            //if user password doesn't match again response with 401 http code
+
+            if(req.body.password != rows[0].password)
+            {
+                 var respJSON = {
+                    code: 401,
+                    data:null
+                } 
+            }
+            else
+            {
+                 ///else
+            //return token 
+
+            }
+
+           
+               var newUserData = {
+                   firstName : req.body.name,
+                   email : rows[0].email,
+                   birthDate : req.body.dob,
+                   country : req.body.country,
+                   passowrd : rows[0].password
+                   
+               }
+               
+           } 
     });
 
     
