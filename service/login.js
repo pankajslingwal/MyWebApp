@@ -5,7 +5,7 @@ var cluster = new couchbase.Cluster('http://localhost:8091/');
 var bucketLogin = cluster.openBucket('MyNodeJSLogin','Sapient201@'); 
 const uuidv1 = require('uuid/v1');
 var N1qlQuery = couchbase.N1qlQuery;
-var jsonWebToken = require('jsonwebtoken');
+var jwt = require('jsonwebtoken');
 var bcrypt = require('bcrypt');
 
 
@@ -146,6 +146,7 @@ router.post('/login', function (req, res, next) {
                 if(passCompare == true)
                 {
                     console.log("passed");
+                    res.json({token: jwt.sign({ email: rows[0].MyNodeJSLogin.email, name: rows[0].MyNodeJSLogin.name}, 'RESTFULAPIs')});
                     //return json webtoken
 
                     //on load of user-profile check if loggedin yuser has webtoken
@@ -153,7 +154,7 @@ router.post('/login', function (req, res, next) {
                 }
                 
             }
-        }
+        } 
         res.send(respJSON);
     });
 });
