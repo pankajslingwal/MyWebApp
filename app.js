@@ -61,6 +61,52 @@ router.post('/login', function (req, res, next) {
      sess=req.session;
     var form = new formidable.IncomingForm();
     form.parse(req, function(err, fields, files) {
+
+      var options = { 
+            host: 'localhost',
+            port: 3000,
+            path: '/login', 
+            method: 'POST', 
+            headers: { 
+                'Content-Type': 'application/json'
+                }
+            };
+
+            console.log(fields);
+
+            var loginUserData = {
+                   email : fields.email,
+                   password : fields.password
+               }
+
+             var req = http.request(options, function(res1) {
+            res1.setEncoding('utf8');
+            res1.on('data', function (body) {
+                var createResponse = JSON.parse(body);
+                if(createResponse.code == 200)
+                {
+                    
+                    //return res2.redirect('/user-profile');
+                }
+                
+                if(createResponse.code == 12)
+                {
+                    //return res2.redirect('/entryalreadyexist'); 
+                }
+                else
+                {
+                    //return res2.redirect('/genericmessage');
+                }
+            });
+          }); 
+
+          req.on('error', function(e) {
+              //return res2.redirect('/error'); 
+          });
+          req.write(JSON.stringify(loginUserData));
+          req.end();
+
+
     });
   
 });
