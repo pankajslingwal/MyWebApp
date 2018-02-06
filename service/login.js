@@ -145,14 +145,14 @@ router.post('/login', function (req, res, next) {
             else
             {
                 var passCompare = bcrypt.compareSync(req.body.password, rows[0].MyNodeJSLogin.password); 
-                console.log("123");
+                console.log("123"); 
                 if(passCompare == true)
                 {
                     console.log("passed");
                     var respJSON = {
                         code: 200,
                         data:null,
-                        token : jwt.sign({ email: rows[0].MyNodeJSLogin.email, name: rows[0].MyNodeJSLogin.name}, 'RESTFULAPIs')
+                        token : jwt.sign({ email: rows[0].MyNodeJSLogin.email, login: true}, 'RESTFULAPIs')
                     } 
                     console.log(respJSON);
                     res.send(respJSON);
@@ -164,8 +164,8 @@ router.post('/login', function (req, res, next) {
                     var respJSON = {
                         code: 200,
                         data:null,
-                        token : null
-                    } 
+                        token : null 
+                    }
                     
                     res.send(respJSON);
                 }

@@ -93,7 +93,8 @@ router.post('/login', function (req, res, next) {
                 var createResponse = JSON.parse(chunk);
                 //console.log(createResponse.token);
                 sess.loggenInToken = createResponse.token;
-                
+                sess.loggenInMember = { email : loginUserData.email}
+
                 
                 if(createResponse.code == 200)
                 {
@@ -183,7 +184,6 @@ function createUserAccount(req1, res2) {
                 var createResponse = JSON.parse(body);
                 if(createResponse.code == 200)
                 {
-                    sess.loggedIn = true;
                     sess.loggenInMember = sess.validatedUser;
                     return res2.redirect('/user-profile');
                 }
@@ -228,6 +228,16 @@ myapp.use(function(req, res, next) {
       if (err) {
         res.redirect('/failedtoAuthenticatetoken1')
       } else {
+          if(decoded.login == true)
+          {
+                //we can validated if token email is same as of profile email requested so that token is not used to 
+                //see other user details
+          }
+          else
+          {
+              res.redirect("/loginfailed");
+          }
+         // console.log(decoded);
         // if everything is good, save to request for use in other routes
         //req.decoded = decoded;    
         //res.redirect('/tokenverified1')
@@ -241,7 +251,7 @@ myapp.use(function(req, res, next) {
         res.redirect('/login')
   }
 });
-
+ 
 myapp.use('/', router1)
 
 
