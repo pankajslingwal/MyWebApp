@@ -8,19 +8,27 @@ const passport = require('passport');
 var http = require('http');
 var formidable = require('formidable');
 var enCryptPass = require('bcrypt');
+var jwt = require('jsonwebtoken');
 
 
 var myapp = new EXPRESS();  
 var router = EXPRESS.Router(); 
+var router1 = EXPRESS.Router(); 
 var sess;
 
 //Adding module to application
 myapp.use(EXPRESS.static(path.join(__dirname, 'public')));
 myapp.use(COOKIEPARSER());
 //myapp.use(BODYPARSER.urlencoded({ extended: true }));
+// myapp.use(BODYPARSER.json({ type: 'application/*+json' }))
+// myapp.use(BODYPARSER.json());
 myapp.use(session({ secret: 'ssshhhhh', resave:false, saveUninitialized:false}));
 myapp.use(passport.initialize());
 myapp.use(passport.session());
+
+
+
+
 
 
 var hbs = EXPHBS.create({
@@ -38,17 +46,11 @@ router.get('/', function (req, res, next) {
   res.render('index', { pagetitle: 'HomePage', heading: 'Subscribe to our Emails '});
 }); 
 
-router.get('/user-profile', function (req, res, next) {
-  sess=req.session;
-  if(sess.loggedIn != undefined && sess.loggenInMember!= undefined)
-  {
-    res.render('user-profile', { pagetitle: 'User Prfile', heading: 'User Profile', username : sess.loggenInMember.email });
-  }
-  else{
-    res.redirect('/login')
-  }
-  
-}); 
+var enrollRouter = require("./controller/enroll.js");
+
+myapp.use('/', router)
+myapp.use('/enroll', enrollRouter)
+
 
 router.get('/login', function (req, res, next) {
     sess=req.session;  
@@ -72,21 +74,30 @@ router.post('/login', function (req, res, next) {
                 }
             };
 
-            console.log(fields);
+            //console.log(fields);
 
             var loginUserData = {
                    email : fields.email,
                    password : fields.password
                }
 
+
              var req = http.request(options, function(res1) {
             res1.setEncoding('utf8');
-            res1.on('data', function (body) {
-                var createResponse = JSON.parse(body);
+            console.log("1");
+                
+
+            res1.on('data', function (chunk) {
+
+                 
+                var createResponse = JSON.parse(chunk);
+                //console.log(createResponse.token);
+                sess.loggenInToken = createResponse.token;
+                
+                
                 if(createResponse.code == 200)
                 {
-                    
-                    //return res2.redirect('/user-profile');
+                    return res.redirect('/user-profile');
                 }
                 
                 if(createResponse.code == 12)
@@ -98,7 +109,12 @@ router.post('/login', function (req, res, next) {
                     //return res2.redirect('/genericmessage');
                 }
             });
+             
+            //sess.loggenInToken = createResponse.token;
+            
           }); 
+
+         
 
           req.on('error', function(e) {
               //return res2.redirect('/error'); 
@@ -110,6 +126,7 @@ router.post('/login', function (req, res, next) {
     });
   
 });
+
 
 router.get('/success', function (req, res, next) {
     sess=req.session;
@@ -191,8 +208,53 @@ function createUserAccount(req1, res2) {
             });            
 }
 
-var enrollRouter = require("./controller/enroll.js");
 
-myapp.use('/', router)
-myapp.use('/enroll', enrollRouter)
+myapp.use(function(req, res, next) {
+
+ sess=req.session;
+  // check header or url parameters or post parameters for token
+  //var token = req.body.token || req.query.token || req.headers['x-access-token'];
+  //var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhbXBsZUBzYW1wbGUuY29tIiwiaWF0IjoxNTE3OTA4ODY0fQ.bFRILzn87nqbVqgHBVFhDkKJhJvk118PIxcSNWxa_Ao';
+
+  console.log("logging if token is there in session")
+  console.log(sess.loggenInToken)
+  var token = sess.loggenInToken;
+
+  // decode token
+  if (token) {  
+
+    // verifies secret and checks exp
+    jwt.verify(token, 'RESTFULAPIs', function(err, decoded) {      
+      if (err) {
+        res.redirect('/failedtoAuthenticatetoken1')
+      } else {
+        // if everything is good, save to request for use in other routes
+        //req.decoded = decoded;    
+        //res.redirect('/tokenverified1')
+        next();
+      }
+    });
+
+  }
+  else{
+        //Return error as reidrect user to login pagetitle
+        res.redirect('/login')
+  }
+});
+
+myapp.use('/', router1)
+
+
+router1.get('/user-profile', function (req, res, next) {
+    console.log("inside user profile route");
+      sess=req.session;
+    res.render('user-profile', { pagetitle: 'User Prfile', heading: 'User Profile', username : sess.loggenInMember.email });
+
+}); 
+
+
+
+
+
+
 myapp.listen(80);

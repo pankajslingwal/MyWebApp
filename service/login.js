@@ -120,15 +120,17 @@ router.post('/createUser', function (req, res, next) {
 
 
 router.post('/login', function (req, res, next) {
+    console.log("321");
     var params = [];
     params[0] = req.body.email;
     bucketLogin.query(query, params, function(err, rows, meta) {
         if(err)
-        {
+        { 
             var respJSON = {
                 code: err.code,
                 data:null
             } 
+            res.send(respJSON);
         }
         else
         {
@@ -138,24 +140,39 @@ router.post('/login', function (req, res, next) {
                     code: 401,
                     data:null
                 }
+                res.send(respJSON);
             }
             else
             {
                 var passCompare = bcrypt.compareSync(req.body.password, rows[0].MyNodeJSLogin.password); 
-                
+                console.log("123");
                 if(passCompare == true)
                 {
                     console.log("passed");
-                    res.json({token: jwt.sign({ email: rows[0].MyNodeJSLogin.email, name: rows[0].MyNodeJSLogin.name}, 'RESTFULAPIs')});
-                    //return json webtoken
+                    var respJSON = {
+                        code: 200,
+                        data:null,
+                        token : jwt.sign({ email: rows[0].MyNodeJSLogin.email, name: rows[0].MyNodeJSLogin.name}, 'RESTFULAPIs')
+                    } 
+                    console.log(respJSON);
+                    res.send(respJSON);
 
                     //on load of user-profile check if loggedin yuser has webtoken
                     //every request will have webtoken with user
                 }
+                else{
+                    var respJSON = {
+                        code: 200,
+                        data:null,
+                        token : null
+                    } 
+                    
+                    res.send(respJSON);
+                }
                 
             }
         } 
-        res.send(respJSON);
+        
     });
 });
 
