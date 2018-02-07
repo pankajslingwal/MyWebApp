@@ -10,7 +10,7 @@ var bcrypt = require('bcrypt');
 
 
 var myQuery = 'Select * from MyNodeJSLogin where email=$1';
-var checkExistingUserQuery = 'Select  META().id, email from MyNodeJSLogin where email=$1';
+var checkExistingUserQuery = 'Select  META().id, email, password from MyNodeJSLogin where email=$1';
 var updateAccount = 'update * from MyNodeJSLogin where email=$1';
 query = N1qlQuery.fromString(myQuery);
 query1 = N1qlQuery.fromString(checkExistingUserQuery);
@@ -62,14 +62,19 @@ router.post('/updateUser', function (req, res, next) {
            }
            else
            {
+               
+                console.log('updating new user data /updateUser');
+                console.log('from server, row data');
+                console.log(rows);
                var newUserData = {
                    firstName : req.body.name,
                    email : rows[0].email,
                    birthDate : req.body.dob,
                    country : req.body.country,
-                   passowrd : rows[0].password
+                   password : rows[0].password
                    
                }
+               console.log(newUserData);
                
                bucketLogin.upsert(rows[0].id, JSON.stringify(newUserData),
                 function (err, result) {
@@ -144,6 +149,7 @@ router.post('/login', function (req, res, next) {
             }
             else
             {
+                console.log(req.body.password + '--' + rows[0].MyNodeJSLogin.password)
                 var passCompare = bcrypt.compareSync(req.body.password, rows[0].MyNodeJSLogin.password); 
                 console.log("123"); 
                 if(passCompare == true)

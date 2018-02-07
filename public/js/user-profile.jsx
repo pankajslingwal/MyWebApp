@@ -1,10 +1,3 @@
-//https://www.youtube.com/watch?v=vu_rIMPROoQ
-//https://scotch.io/tutorials/authenticate-a-node-js-api-with-json-web-tokens
-//https://hackernoon.com/your-node-js-authentication-tutorial-is-wrong-f1a3bf831a46
-//https://medium.freecodecamp.org/securing-node-js-restful-apis-with-json-web-tokens-9f811a92bb52
-//https://www.codementor.io/olatundegaruba/5-steps-to-authenticating-node-js-with-jwt-7ahb5dmyr
-
-
 import React from "react";
 import ReactDOM from "react-dom";
 
@@ -31,7 +24,6 @@ class Layout extends React.Component {
         this.formName = "User Profile Editable Form !!";
     }
 
-   
     componentDidMount() {
     fetch(urlForUsername + this.state.username)
       .then(response => {
@@ -102,11 +94,8 @@ class Layout extends React.Component {
             console.log(this.props.url, status, err.toString());
           }.bind(this)
         });
-        
-        
       }
     }
-
 
     render()
     {
@@ -123,7 +112,6 @@ class Layout extends React.Component {
         buttonText = "Save";
       }
 
-
       if (this.state.requestFailed)
       { 
         return <p>Failed!</p>
@@ -136,7 +124,6 @@ class Layout extends React.Component {
       { 
          return <p>Processing...</p>
       }
-      
       
         return (
           
@@ -173,6 +160,12 @@ class Layout extends React.Component {
                   <button type="button"  className="btn btn-primary btn-block" onClick={this.makeFormEditable.bind(this)}>{buttonText}</button>
                 </div>
              </div>
+
+             <div className="form-group">
+                <div className="col-sm-2">
+                  <button type="button"  className="btn btn-primary btn-block"><a href="/logout">Logout</a></button>
+                </div>
+             </div>
           </form>   
       </div>  
         );
@@ -180,5 +173,4 @@ class Layout extends React.Component {
 }
 
 const app = document.getElementById('app');
-
 ReactDOM.render(<Layout/>,app);

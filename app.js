@@ -16,7 +16,6 @@ var router = EXPRESS.Router();
 var router1 = EXPRESS.Router(); 
 var sess;
 
-//Adding module to application
 myapp.use(EXPRESS.static(path.join(__dirname, 'public')));
 myapp.use(COOKIEPARSER());
 //myapp.use(BODYPARSER.urlencoded({ extended: true }));
@@ -25,11 +24,6 @@ myapp.use(COOKIEPARSER());
 myapp.use(session({ secret: 'ssshhhhh', resave:false, saveUninitialized:false}));
 myapp.use(passport.initialize());
 myapp.use(passport.session());
-
-
-
-
-
 
 var hbs = EXPHBS.create({
     defaultLayout: 'main'
@@ -45,6 +39,12 @@ router.get('/', function (req, res, next) {
   sess.validatedUser = undefined;
   res.render('index', { pagetitle: 'HomePage', heading: 'Subscribe to our Emails '});
 }); 
+
+router.get('/logout', function (req, res, next) {
+  sess=req.session;
+  sess.loggenInToken = undefined;
+  res.render('index', { pagetitle: 'HomePage', heading: 'Subscribe to our Emails '});
+});
 
 var enrollRouter = require("./controller/enroll.js");
 
@@ -80,6 +80,8 @@ router.post('/login', function (req, res, next) {
                    email : fields.email,
                    password : fields.password
                }
+
+               console.log(loginUserData);
 
 
              var req = http.request(options, function(res1) {
