@@ -74,26 +74,24 @@ router.post('/login', function (req, res, next) {
                 }
             };
 
-            //console.log(fields);
+            
 
             var loginUserData = {
                    email : fields.email,
-                   password : fields.password
+                   pwd : fields.password
                }
 
-               console.log(loginUserData);
-
-
+               
              var req = http.request(options, function(res1) {
             res1.setEncoding('utf8');
-            console.log("1");
+           
                 
 
             res1.on('data', function (chunk) {
 
                  
                 var createResponse = JSON.parse(chunk);
-                //console.log(createResponse.token);
+               
                 sess.loggenInToken = createResponse.token;
                 sess.loggenInMember = { email : loginUserData.email}
 
@@ -176,7 +174,7 @@ function createUserAccount(req1, res2) {
                 firstName : subscribedUserData.firstName,
                 email : subscribedUserData.email,
                 country : subscribedUserData.country,
-                password : enCryptPass.hashSync(fields.password, 10),
+                pwd : enCryptPass.hashSync(fields.password, 10),
                 birthDate : subscribedUserData.birthDate
               }
               
@@ -214,12 +212,7 @@ function createUserAccount(req1, res2) {
 myapp.use(function(req, res, next) {
 
  sess=req.session;
-  // check header or url parameters or post parameters for token
-  //var token = req.body.token || req.query.token || req.headers['x-access-token'];
-  //var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhbXBsZUBzYW1wbGUuY29tIiwiaWF0IjoxNTE3OTA4ODY0fQ.bFRILzn87nqbVqgHBVFhDkKJhJvk118PIxcSNWxa_Ao';
-
-  console.log("logging if token is there in session")
-  console.log(sess.loggenInToken)
+  
   var token = sess.loggenInToken;
 
   // decode token
@@ -258,7 +251,6 @@ myapp.use('/', router1)
 
 
 router1.get('/user-profile', function (req, res, next) {
-    console.log("inside user profile route");
       sess=req.session;
     res.render('user-profile', { pagetitle: 'User Prfile', heading: 'User Profile', username : sess.loggenInMember.email });
 

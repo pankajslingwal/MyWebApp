@@ -10,7 +10,7 @@ var bcrypt = require('bcrypt');
 
 
 var myQuery = 'Select * from MyNodeJSLogin where email=$1';
-var checkExistingUserQuery = 'Select  META().id, email, password from MyNodeJSLogin where email=$1';
+var checkExistingUserQuery = 'Select  META().id, email, pwd from MyNodeJSLogin where email=$1';
 var updateAccount = 'update * from MyNodeJSLogin where email=$1';
 query = N1qlQuery.fromString(myQuery);
 query1 = N1qlQuery.fromString(checkExistingUserQuery);
@@ -46,13 +46,13 @@ router.get('/getUser/:emailId', function (req, res, next) {
 });
 
 router.post('/updateUser', function (req, res, next) {
-    
+    console.log("pankaj test");
     var params = [];
     params[0] = req.body.email;
     bucketLogin.query(query1, params, function(err, rows, meta) {
         if(err)
            {
-               console.log('1111');
+               console.log(err);
                 var respJSON = {
                     code: err.code,
                     data:null
@@ -63,23 +63,22 @@ router.post('/updateUser', function (req, res, next) {
            else
            {
                
-                console.log('updating new user data /updateUser');
-                console.log('from server, row data');
-                console.log(rows);
                var newUserData = {
                    firstName : req.body.name,
                    email : rows[0].email,
                    birthDate : req.body.dob,
                    country : req.body.country,
-                   password : rows[0].password
+                   pwd : rows[0].pwd
                    
                }
-               console.log(newUserData);
+               
                
                bucketLogin.upsert(rows[0].id, JSON.stringify(newUserData),
                 function (err, result) {
                     if(err)
                     {
+                        
+                        
                         var respJSON = {
                             code: err.code,
                             data:null
@@ -125,7 +124,7 @@ router.post('/createUser', function (req, res, next) {
 
 
 router.post('/login', function (req, res, next) {
-    console.log("321");
+    
     var params = [];
     params[0] = req.body.email;
     bucketLogin.query(query, params, function(err, rows, meta) {
@@ -149,22 +148,16 @@ router.post('/login', function (req, res, next) {
             }
             else
             {
-                console.log(req.body.password + '--' + rows[0].MyNodeJSLogin.password)
-                var passCompare = bcrypt.compareSync(req.body.password, rows[0].MyNodeJSLogin.password); 
-                console.log("123"); 
+                var passCompare = bcrypt.compareSync(req.body.pwd, rows[0].MyNodeJSLogin.pwd); 
                 if(passCompare == true)
                 {
-                    console.log("passed");
                     var respJSON = {
                         code: 200,
                         data:null,
                         token : jwt.sign({ email: rows[0].MyNodeJSLogin.email, login: true}, 'RESTFULAPIs')
                     } 
-                    console.log(respJSON);
                     res.send(respJSON);
 
-                    //on load of user-profile check if loggedin yuser has webtoken
-                    //every request will have webtoken with user
                 }
                 else{
                     var respJSON = {
